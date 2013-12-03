@@ -49,9 +49,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
       return EGL_FALSE;
     }
 
-    // You can hardcode the resolution here:
-    display_width = 640;
-    display_height = 480;
+    display_width  = context.width;
+    display_height = context.height;
 
     dst_rect.x = 0;
     dst_rect.y = 0;
@@ -198,22 +197,92 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
     //return userinterrupt;
 //}
 #endif
+
+
+    EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
+    {
+        // Obtains the EGL display connection for the given native display 
+        EGLDisplay display;
+
+        #ifdef RPI_NO_X
+        display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+        #else
+        display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
+        #endif
+
+        if(display == EGL_NO_DISPLAY)
+        {
+            return EGL_FALSE;
+        }
+
+        // Initialize EGL
+        if(eglInitialize(display, nullptr, nullptr) == EGL_FALSE)
+        {
+            return EGL_FALSE;
+        }
+
+        // Get configs
+        EGLint nbConfigs;
+        if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
+        {
+            return EGL_FALSE;
+        }
+
+        // Choose config
+         EGLConfig config;
+        if(eglChooseConfig(display, attribList, &config, 1, &nbConfigs) == EGL_FALSE)
+        {
+            return EGL_FALSE;
+        }
+
+        // Create a surface
+        #ifdef RPI_NO_X
+        EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+        #else
+        EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
+        #endif
+
+        EGLSurface surface = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+        if(surface == EGL_NO_SURFACE)
+        {
+            return EGL_FALSE;
+        }
+
+        // Create an EGL context
+         EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+         if(context == EGL_NO_CONTEXT)
+         {
+             return EGL_FALSE;
+         }
+
+         // Make the context current
+         if(eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
+         {
+             return EGL_FALSE;
+         }
+
+         rpiContext.eglDisplay = display;
+         rpiContext.eglSurface = surface;
+         rpiContext.eglContext = context;
+
+         return EGL_TRUE;
+    }
 }
 
 namespace RPi {
 
 Window::Window(Context & context, char const * title,
     int width, int height, WindowFlags flags):
-    m_width(width), m_height(height)
+    m_width(width), m_height(height), m_context(context)
 {
+    context.width  = width;
+    context.height = height;
+
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
     {
         //throw EGLException("Cannot create window");
     }
-
-    context.width  = width;
-    context.height = height;
 
     // EGL context attributes
     EGLint const attribList[] =
@@ -233,6 +302,17 @@ Window::Window(Context & context, char const * title,
     {
         //throw EGLException("Cannot create window");
     }
+}
+
+
+Context & Window::getContext() const
+{
+    return m_context;
+}
+
+void Window::display() const
+{
+    eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
 }
 
 }

@@ -21,9 +21,14 @@ namespace RPi {
             Window(Context & context, char const * title,
                 int width, int height, WindowFlags flags = 0);
 
+            Context & getContext() const;
+
+            void display() const;
+
         private:
             int m_width;
             int m_height;
+            Context & m_context;
     };
 }
 
