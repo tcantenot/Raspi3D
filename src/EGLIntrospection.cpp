@@ -4,13 +4,11 @@
 #include <sstream>
 #include <vector>
 
-#include <EGL/egl.h>
-
 namespace
 {
     EGLDisplay s_display = EGL_NO_DISPLAY;
-    int s_major = 0;
-    int s_minor = 0;
+    int s_majorVersion = 0;
+    int s_minorVersion = 0;
     std::string s_version = "";
     std::string s_config  = "";
 
@@ -25,19 +23,23 @@ namespace
         assert(s_display != EGL_NO_DISPLAY);
     }
 
+    // FIXME: double initialisation with Window::Window() ...
+    // -> Initializer<Context> contextInitializer
+    //  Initialize(){ T::Initialize(); }
+    //  ~Initialize(){ T::Uninitialize(); }
     void init_egl_context()
     {
         // Get an EGL display connection
         get_display();
 
         // Initialize EGL and get version
-        auto init = eglInitialize(s_display, &s_major, &s_minor);
+        auto init = eglInitialize(s_display, &s_majorVersion, &s_minorVersion);
         (void) init;
         assert(init != EGL_FALSE);
 
         // Set string version
         std::ostringstream version;
-        version << s_major << "." << s_minor;
+        version << s_majorVersion << "." << s_minorVersion;
         s_version = version.str();
     }
 
@@ -137,6 +139,8 @@ namespace
     }
 }
 
+namespace RPi {
+
 bool EGLIntrospection::s_initialized = false;
 
 bool EGLIntrospection::Initialize()
@@ -163,6 +167,15 @@ std::string EGLIntrospection::GetVersion()
     return s_version;
 }
 
+EGLint EGLIntrospection::GetMajorVersion()
+{
+    return s_majorVersion;
+}
+
+EGLint EGLIntrospection::GetMinorVersion()
+{
+    return s_minorVersion;
+}
 
 std::string EGLIntrospection::GetConfig()
 {
@@ -171,4 +184,4 @@ std::string EGLIntrospection::GetConfig()
 
     return s_config;
 }
-
+}

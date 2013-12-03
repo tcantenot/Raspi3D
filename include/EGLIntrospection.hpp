@@ -1,20 +1,29 @@
 #ifndef EGL_INTROSPECTION_HPP
 #define EGL_INTROSPECTION_HPP
 
+#include <EGLHeaders.hpp>
+
 #include <string>
 
-class EGLIntrospection
-{
-    public:
+namespace RPi {
 
-        static bool Initialize();
+    class EGLIntrospection
+    {
+        public:
 
-        static std::string GetVersion();
+            static bool Initialize();
 
-        static std::string GetConfig();
+            static std::string GetVersion();
+            
+            static EGLint GetMajorVersion();
 
-    private:
-        static bool s_initialized;
-};
+            static EGLint GetMinorVersion();
+
+            static std::string GetConfig();
+
+        private:
+            static bool s_initialized;
+    };
+}
 
 #endif //EGL_INTROSPECTION_HPP
