@@ -2,6 +2,7 @@
 #define CONTEXT_HPP
 
 #include <EGLHeaders.hpp>
+#include <GLSLProgram.hpp>
 
 namespace RPi {
 
@@ -16,6 +17,7 @@ namespace RPi {
         EGLDisplay eglDisplay;
         EGLSurface eglSurface;
         EGLNativeWindowType eglWindow;
+        GLSLProgram * program;
     };
 }
 

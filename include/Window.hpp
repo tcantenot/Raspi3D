@@ -25,6 +25,8 @@ namespace RPi {
 
             void display() const;
 
+            void init() const;
+
         private:
             int m_width;
             int m_height;

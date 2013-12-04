@@ -5,7 +5,9 @@
 
 namespace RPi {
     
-App::App(Window & window, int, char const **): m_window(window)
+App::App(Window & window, int, char const **):
+    m_window(window), m_drawFunc(nullptr), m_updateFunc(nullptr),
+    m_keyFunc(nullptr)
 {
 
 }
@@ -42,8 +44,8 @@ void App::run()
     while(running)
     {
         auto t2 = std::chrono::high_resolution_clock::now();
-        auto deltaTime = std::chrono::duration_cast<
-            std::chrono::microseconds>(t2 - t1).count() / 1000.f;
+        auto deltaTime = static_cast<float>(std::chrono::duration_cast<
+            std::chrono::microseconds>(t2 - t1).count()) / 1000.f;
 
         t1 = t2;
 
@@ -62,11 +64,14 @@ void App::run()
         totalTime += deltaTime;
         ++nbFrames;
 
-        if(totalTime > 1.0f)
+        if(totalTime > 1000.0f)
         {
-            std::cout << nbFrames << " frames rendered in " << totalTime << " ms -> FPS = "
-                      << (nbFrames / totalTime / 1000.0) << std::endl;
-            totalTime -= 1.0f;
+            std::cout << nbFrames << " frames rendered in " << totalTime 
+                      << " ms -> FPS = " 
+                      << (static_cast<float>(nbFrames) / (totalTime / 1000.f))
+                      << std::endl;
+
+            totalTime -= 1000.0f;
             nbFrames = 0;
         }
     }

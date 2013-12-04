@@ -1,5 +1,6 @@
 #include <cassert>
 #include <cstring>
+#include <iostream>
 
 #include <Window.hpp>
 #include <EGLHeaders.hpp>
@@ -212,12 +213,14 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
 
         if(display == EGL_NO_DISPLAY)
         {
+            std::cerr << "Failed to get display" << std::endl;
             return EGL_FALSE;
         }
 
         // Initialize EGL
         if(eglInitialize(display, nullptr, nullptr) == EGL_FALSE)
         {
+            std::cerr << "Failed to initialize EGL" << std::endl;
             return EGL_FALSE;
         }
 
@@ -225,6 +228,7 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
         EGLint nbConfigs;
         if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
         {
+            std::cerr << "Failed to get configs" << std::endl;
             return EGL_FALSE;
         }
 
@@ -232,6 +236,7 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
          EGLConfig config;
         if(eglChooseConfig(display, attribList, &config, 1, &nbConfigs) == EGL_FALSE)
         {
+            std::cerr << "Failed to choose configs" << std::endl;
             return EGL_FALSE;
         }
 
@@ -242,9 +247,12 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
         EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
         #endif
 
-        EGLSurface surface = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+        EGLSurface surface = eglCreateWindowSurface(display, config,
+            static_cast<EGLNativeWindowType>(rpiContext.eglWindow), nullptr);
+
         if(surface == EGL_NO_SURFACE)
         {
+            std::cerr << "Failed to create surface" << std::endl;
             return EGL_FALSE;
         }
 
@@ -252,12 +260,14 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
          EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
          if(context == EGL_NO_CONTEXT)
          {
+            std::cerr << "Failed to create context" << std::endl;
              return EGL_FALSE;
          }
 
          // Make the context current
          if(eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
          {
+            std::cerr << "Failed to make context current" << std::endl;
              return EGL_FALSE;
          }
 
@@ -282,6 +292,7 @@ Window::Window(Context & context, char const * title,
     if(create_window(context, title) == EGL_FALSE)
     {
         //throw EGLException("Cannot create window");
+        std::cerr << "Failed to create window" << std::endl;
     }
 
     // EGL context attributes
@@ -290,10 +301,10 @@ Window::Window(Context & context, char const * title,
        EGL_RED_SIZE,       5,
        EGL_GREEN_SIZE,     6,
        EGL_BLUE_SIZE,      5,
-       EGL_ALPHA_SIZE,    (flags & WINDOW_ALPHA) ? 8 : EGL_DONT_CARE,
-       EGL_DEPTH_SIZE,    (flags & WINDOW_DEPTH) ? 8 : EGL_DONT_CARE,
-       EGL_STENCIL_SIZE,  (flags & WINDOW_STENCIL) ? 8 : EGL_DONT_CARE,
-       EGL_SAMPLE_BUFFERS,(flags & WINDOW_ALPHA) ? 1 : 0,
+       EGL_ALPHA_SIZE,     (flags & WINDOW_ALPHA)   ? 8 : EGL_DONT_CARE,
+       EGL_DEPTH_SIZE,     (flags & WINDOW_DEPTH)   ? 8 : EGL_DONT_CARE,
+       EGL_STENCIL_SIZE,   (flags & WINDOW_STENCIL) ? 8 : EGL_DONT_CARE,
+       EGL_SAMPLE_BUFFERS, (flags & WINDOW_ALPHA)   ? 1 : 0,
        EGL_NONE
     };
 
@@ -301,6 +312,7 @@ Window::Window(Context & context, char const * title,
     if(create_egl_context(context, attribList) == EGL_FALSE)
     {
         //throw EGLException("Cannot create window");
+        std::cerr << "Failed to create egl context" << std::endl;
     }
 }
 
@@ -313,6 +325,11 @@ Context & Window::getContext() const
 void Window::display() const
 {
     eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
+}
+
+void Window::init() const
+{
+    glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
 }

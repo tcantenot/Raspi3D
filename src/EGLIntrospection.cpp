@@ -169,11 +169,17 @@ std::string EGLIntrospection::GetVersion()
 
 EGLint EGLIntrospection::GetMajorVersion()
 {
+    // EGLInstropection module must be initialized
+    assert(s_initialized);
+
     return s_majorVersion;
 }
 
 EGLint EGLIntrospection::GetMinorVersion()
 {
+    // EGLInstropection module must be initialized
+    assert(s_initialized);
+
     return s_minorVersion;
 }
 
