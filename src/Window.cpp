@@ -80,12 +80,12 @@ EGLBoolean create_window(RPi::Context & context, const char *)
         return EGL_TRUE;
 }
 ///
-//  userInterrupt()
+//  user_interrupt()
 //
 //      Reads from X11 event loop and interrupt program if there is a keypress, or
 //      window close action.
 //
-GLboolean userInterrupt(RPi::Context &)
+GLboolean user_interrupt(RPi::Context &)
 {
     //GLboolean userinterrupt = GL_FALSE;
     //return userinterrupt;
@@ -168,35 +168,35 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
 
 
 ///
-//  userInterrupt()
+//  user_interrupt()
 //
 //      Reads from X11 event loop and interrupt program if there is a keypress, or
 //      window close action.
 //
-//GLboolean userInterrupt(RPi::Context & context)
-//{
-    //XEvent xev;
-    //KeySym key;
-    //GLboolean userinterrupt = GL_FALSE;
-    //char text;
+GLboolean user_interrupt(RPi::Context & context)
+{
+    XEvent xev;
+    KeySym key;
+    GLboolean userinterrupt = EGL_FALSE;
+    char text;
 
-     ////Pump all messages from X server. Keypresses are directed to keyfunc(if defined)
-    //while( XPending( x_display ) )
-    //{
-        //XNextEvent( x_display, &xev );
-        //if( xev.type == KeyPress )
-        //{
-            //if(XLookupString(&xev.xkey,&text,1,&key,0)==1)
-            //{
-                //if(context.keyFunc != NULL)
-                    //context.keyFunc(context, text, 0, 0);
-            //}
-        //}
-        //if( xev.type == DestroyNotify )
-            //userinterrupt = GL_TRUE;
-    //}
-    //return userinterrupt;
-//}
+     //Pump all messages from X server. Keypresses are directed to keyfunc(if defined)
+    while(XPending(x_display))
+    {
+        XNextEvent(x_display, &xev);
+        if(xev.type == KeyPress)
+        {
+            if(XLookupString(&xev.xkey, &text, 1, &key, 0) == 1)
+            {
+                if(context.keyFunc != nullptr)
+                    context.keyFunc(context, text, 0, 0);
+            }
+        }
+        if(xev.type == DestroyNotify)
+            userinterrupt = EGL_TRUE;
+    }
+    return userinterrupt;
+}
 #endif
 
 
@@ -316,10 +316,26 @@ Window::Window(Context & context, char const * title,
     }
 }
 
+Window::~Window()
+{
+    #ifdef __arm__
+    bcm_host_deinit();
+    #endif
+}
 
 Context & Window::getContext() const
 {
     return m_context;
+}
+
+int Window::getWidth() const
+{
+    return m_width;
+}
+
+int Window::getHeight() const
+{
+    return m_height;
 }
 
 void Window::display() const
@@ -330,6 +346,11 @@ void Window::display() const
 void Window::init() const
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
+}
+
+bool Window::userInterrupt()
+{
+    return user_interrupt(m_context) == EGL_TRUE;
 }
 
 }

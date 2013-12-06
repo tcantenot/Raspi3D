@@ -3,6 +3,9 @@
 
 #include <string>
 
+#include <glm/glm.hpp>
+
+//#include <OpenGLHeaders.hpp>
 #include <EGLHeaders.hpp>
 #include <Enums.hpp>
 
@@ -18,6 +21,8 @@ namespace RPi {
 
             std::string const & getLog() const;
 
+            int getUniformLocation(std::string const & uniform) const;
+
             bool isLinked() const;
 
             bool link();
@@ -25,6 +30,7 @@ namespace RPi {
             bool loadShaderFromFile(Enums::ShaderType type, std::string const & filename);
             bool loadShader(Enums::ShaderType type, std::string const & source);
 
+            void sendMatrix(std::string const & uniform, glm::mat4 const & matrix) const;
             void unbind() const;
 
         private:

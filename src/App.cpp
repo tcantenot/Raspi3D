@@ -6,8 +6,7 @@
 namespace RPi {
     
 App::App(Window & window, int, char const **):
-    m_window(window), m_drawFunc(nullptr), m_updateFunc(nullptr),
-    m_keyFunc(nullptr)
+    m_window(window)
 {
 
 }
@@ -18,30 +17,30 @@ App::~App()
 }
 
 
-void App::registerDrawFunc(DrawFunc drawFunc)
+void App::registerDrawFunc(Context::DrawFunc drawFunc)
 {
-    m_drawFunc = drawFunc;
+    m_window.getContext().drawFunc = drawFunc;
 }
 
-void App::registerUpdateFunc(UpdateFunc updateFunc)
+void App::registerUpdateFunc(Context::UpdateFunc updateFunc)
 {
-    m_updateFunc = updateFunc;
+    m_window.getContext().updateFunc = updateFunc;
 }
 
-void App::registerKeyFunc(KeyFunc keyFunc)
+void App::registerKeyFunc(Context::KeyFunc keyFunc)
 {
-    m_keyFunc = keyFunc;
+    m_window.getContext().keyFunc = keyFunc;
 }
 
 void App::run()
 {
     double totalTime = 0.0;
     std::size_t nbFrames = 0;
-    auto running = true;
+    auto quitting = false;
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    while(running)
+    while(!m_window.userInterrupt() && !quitting)
     {
         auto t2 = std::chrono::high_resolution_clock::now();
         auto deltaTime = static_cast<float>(std::chrono::duration_cast<
@@ -49,14 +48,14 @@ void App::run()
 
         t1 = t2;
 
-        if(m_updateFunc != nullptr)
+        if(m_window.getContext().updateFunc != nullptr)
         {
-            m_updateFunc(m_window.getContext(), deltaTime);
+            m_window.getContext().updateFunc(m_window.getContext(), deltaTime);
         }
 
-        if(m_drawFunc != nullptr)
+        if(m_window.getContext().drawFunc != nullptr)
         {
-            m_drawFunc(m_window.getContext());
+            m_window.getContext().drawFunc(m_window.getContext());
         }
 
         m_window.display();

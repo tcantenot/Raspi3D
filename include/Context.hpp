@@ -8,6 +8,10 @@ namespace RPi {
 
     struct Context
     {
+        using DrawFunc   = void(*)(Context &);
+        using UpdateFunc = void(*)(Context &, float);
+        using KeyFunc    = void(*)(Context &, unsigned char, int, int);
+
         Context();
         ~Context() = default;
 
@@ -17,7 +21,10 @@ namespace RPi {
         EGLDisplay eglDisplay;
         EGLSurface eglSurface;
         EGLNativeWindowType eglWindow;
-        GLSLProgram * program;
+        GLSLProgram * program = nullptr;
+        DrawFunc drawFunc = nullptr;
+        UpdateFunc updateFunc = nullptr;
+        KeyFunc keyFunc = nullptr;
     };
 }
 

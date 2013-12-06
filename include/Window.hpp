@@ -21,11 +21,17 @@ namespace RPi {
             Window(Context & context, char const * title,
                 int width, int height, WindowFlags flags = 0);
 
+            ~Window();
+
             Context & getContext() const;
+            int getWidth() const;
+            int getHeight() const;
 
             void display() const;
 
             void init() const;
+
+            bool userInterrupt();
 
         private:
             int m_width;

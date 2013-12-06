@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include <GLSLProgram.hpp>
 #include <OpenGL.hpp>
 #include <OpenGLIntrospection.hpp>
@@ -92,7 +94,7 @@ GLSLProgram::GLSLProgram(): m_id(0), m_log(""), m_linked(false)
     // with a named attribute variable
     for(auto const & lb : s_locationBindings)
     {
-        //glBindAttribLocation(m_id, lb.index, lb.name);
+        glBindAttribLocation(m_id, lb.index, lb.name);
     }
 }
 
@@ -111,6 +113,12 @@ std::string const & GLSLProgram::getLog() const
 {
     return m_log;
 }
+
+int GLSLProgram::getUniformLocation(std::string const & uniform) const
+{
+    return glGetUniformLocation(m_id, uniform.c_str());
+}
+
 
 bool GLSLProgram::isLinked() const
 {
@@ -215,6 +223,15 @@ bool GLSLProgram::loadShader(Enums::ShaderType type, std::string const & source)
 
     return success;
 }
+
+void GLSLProgram::sendMatrix(std::string const & uniform, glm::mat4 const & matrix) const
+{
+    this->bind();
+    auto location = this->getUniformLocation(uniform);
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+
 
 void GLSLProgram::unbind() const
 {
