@@ -221,6 +221,7 @@ GLboolean user_interrupt(RPi::Context & context)
             return EGL_FALSE;
         }
 
+        std::cout << "Initialize display OK" << std::endl;
         // Get configs
         EGLint nbConfigs;
         if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
