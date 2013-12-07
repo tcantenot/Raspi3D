@@ -200,11 +200,11 @@ GLboolean user_interrupt(RPi::Context & context)
         // Obtains the EGL display connection for the given native display 
         EGLDisplay display;
 
-        #ifdef RPI_NO_X
+        //#ifdef RPI_NO_X
         display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-        #else
-        display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
-        #endif
+        //#else
+        //display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
+        //#endif
 
         if(display == EGL_NO_DISPLAY)
         {
