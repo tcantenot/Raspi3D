@@ -136,32 +136,32 @@ bool GLSLProgram::link()
         //exit(1);
     //}
 
-    //return true;
+    return true;
 
-    if(OpenGLIntrospection::ProgramLinkageSuccess(m_id))
-    {
-        m_log = "Linkage successful";
-        return true;
-    }
-    else
-    {
-        m_log = OpenGLIntrospection::ShaderProgramInfoLog(m_id);
+    //if(OpenGLIntrospection::ProgramLinkageSuccess(m_id))
+    //{
+        //m_log = "Linkage successful";
+        //return true;
+    //}
+    //else
+    //{
+        //m_log = OpenGLIntrospection::ShaderProgramInfoLog(m_id);
 
-        if(m_log.length() > 1)
-        {
-            m_log = "Linkage error : " + m_log;
-        }
-        else
-        {
-            m_log = "Linkage failed and no info log found";
-        }
+        //if(m_log.length() > 1)
+        //{
+            //m_log = "Linkage error : " + m_log;
+        //}
+        //else
+        //{
+            //m_log = "Linkage failed and no info log found";
+        //}
 
-        std::cerr << "GLSLProgram::link : " + m_log << std::endl;
+        //std::cerr << "GLSLProgram::link : " + m_log << std::endl;
 
-        glDeleteProgram(m_id);
+        //glDeleteProgram(m_id);
 
-        return false;
-    }
+        //return false;
+    //}
 }
 
 bool GLSLProgram::loadShaderFromFile(Enums::ShaderType type, std::string const & filename)
