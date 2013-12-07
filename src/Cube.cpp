@@ -120,8 +120,6 @@ float verticesTmp[] = {-1.0, -1.0, -1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,   
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24 * sizeof(unsigned int), nullptr, GL_STATIC_DRAW);
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, 24 * sizeof(unsigned int), indices);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    std::cout << "OK " << m_vbo << std::endl;
 }
 
 Cube::~Cube()
@@ -137,23 +135,17 @@ void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4
 
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vboIndices);
-        std::cout << "Bind buffers" << std::endl;
-
 
         glVertexAttribPointer(OpenGL::AttributeIndex[Enums::AttributeIndex_Position],
             3, GL_FLOAT, GL_FALSE, 0, 0);
         //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, m_vertices);
         glEnableVertexAttribArray(0);
-        std::cout << "Enable VAA 0" << std::endl;
 
         program.sendMatrix("MatProjection", projection);
         program.sendMatrix("MatModelView", modelView);
-        std::cout << "Send matrices" << std::endl;
 
 
         //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));
-
-        std::cout << "Draw" << std::endl;
 
 
         //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, m_colors);

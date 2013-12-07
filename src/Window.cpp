@@ -155,7 +155,7 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
 
     // Set the eglWindow attribute of the current context to
     // the newly created window
-    context.eglWindow = static_cast<EGLNativeWindowType>(window);
+    context.eglWindow = (EGLNativeWindowType) window;
 
     return EGL_TRUE;
 }
@@ -320,9 +320,7 @@ Window::Window(Context & context, char const * title,
 
 Window::~Window()
 {
-    #ifdef __arm__
-    bcm_host_deinit();
-    #endif
+
 }
 
 Context & Window::getContext() const
