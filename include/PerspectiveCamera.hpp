@@ -52,7 +52,6 @@ class PerspectiveCamera : public Camera
         glm::mat4 m_projection;
 
         bool m_needUpdateProj;
-
 };
 
 }
