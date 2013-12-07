@@ -73,6 +73,8 @@ int main(int argc, char const ** argv)
 
     RPi::Window window(context, "First App", 640, 480);
 
+    std::cout << "Window created" << std::endl;
+
     GLSLProgram program;
     context.program = &program;
     program.loadShaderFromFile(Enums::ShaderType_VertexShader, "./shaders/shader.vs");
