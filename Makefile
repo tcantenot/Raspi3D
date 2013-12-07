@@ -27,7 +27,9 @@ EXEC = exe
 MAKEFILE = Makefile
 
 # Libraries directory
-LIB_DIR = ./extlib/
+LIB_DIR = /opt/vc/include \
+		 /opt/vc/include/interface/vcos/pthreads \
+		 /opt/vc/include/interface/vmcs_host/linux
 
 # Extern headers (include) folders
 EXTERN_HDR_DIR = $(LIB_DIR)include/
@@ -36,7 +38,7 @@ EXTERN_HDR_DIR = $(LIB_DIR)include/
 EXTERN_LIB_DIR = $(LIB_DIR)lib/
 
 # Extern libraries flags used for linking
-EXTERN_LIB_FLAGS = -lX11 -lEGL -lGLESv2 $(shell sdl-config --cflags) $(shell sdl-config --libs)# -lSDL2_image #-lGL -lGLEW -lGLU
+EXTERN_LIB_FLAGS = -lX11 -lEGL -lGLESv2 $(shell sdl-config --cflags) $(shell sdl-config --libs) -L/opt/vc/lib -lbcm_host# -lSDL2_image #-lGL -lGLEW -lGLU
 
 # Defines
 DEBUG_DEFINES =
