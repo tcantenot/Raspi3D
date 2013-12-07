@@ -205,6 +205,8 @@ GLboolean user_interrupt(RPi::Context & context)
         //#else
         //display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
         //#endif
+        
+        std::cout << "Get display OK" << std::endl;
 
         if(display == EGL_NO_DISPLAY)
         {
