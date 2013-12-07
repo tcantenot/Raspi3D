@@ -13,7 +13,7 @@ namespace RPi {
         using KeyFunc    = void(*)(Context &, unsigned char, int, int);
 
         Context();
-        ~Context() = default;
+        ~Context();
 
         EGLint width;
         EGLint height;

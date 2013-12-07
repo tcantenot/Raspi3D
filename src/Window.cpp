@@ -31,16 +31,6 @@ EGLBoolean create_window(RPi::Context & context, const char *)
 {
     static EGL_DISPMANX_WINDOW_T nativewindow;
 
-    DISPMANX_ELEMENT_HANDLE_T dispman_element;
-    DISPMANX_DISPLAY_HANDLE_T dispman_display;
-    DISPMANX_UPDATE_HANDLE_T dispman_update;
-    VC_RECT_T dst_rect;
-    VC_RECT_T src_rect;
-
-
-    int display_width;
-    int display_height;
-
     // create an EGL window surface, passing context width/height
     auto success = graphics_get_display_size(0 /* LCD */, 
         &display_width, &display_height);
@@ -50,8 +40,11 @@ EGLBoolean create_window(RPi::Context & context, const char *)
       return EGL_FALSE;
     }
 
-    display_width  = context.width;
-    display_height = context.height;
+    auto display_width  = context.width;
+    auto display_height = context.height;
+
+    VC_RECT_T dst_rect;
+    VC_RECT_T src_rect;
 
     dst_rect.x = 0;
     dst_rect.y = 0;
@@ -63,12 +56,13 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     src_rect.width = display_width << 16;
     src_rect.height = display_height << 16;   
 
-    dispman_display = vc_dispmanx_display_open(0 /* LCD */);
-    dispman_update  = vc_dispmanx_update_start(0);
+    DISPMANX_DISPLAY_HANDLE_T dispman_display = vc_dispmanx_display_open(0 /* LCD */);
+    DISPMANX_UPDATE_HANDLE_T dispman_update  = vc_dispmanx_update_start(0);
          
-    dispman_element = vc_dispmanx_element_add(dispman_update, dispman_display,
-      0/*layer*/, &dst_rect, 0/*src*/,
-      &src_rect, DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 0/*clamp*/, 0/*transform*/);
+    DISPMANX_ELEMENT_HANDLE_T dispman_element = 
+        vc_dispmanx_element_add(dispman_update, dispman_display,
+        0/*layer*/, &dst_rect, 0/*src*/, &src_rect, 
+        DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 0/*clamp*/, 0/*transform*/);
       
     nativewindow.element = dispman_element;
     nativewindow.width = display_width;
@@ -77,7 +71,7 @@ EGLBoolean create_window(RPi::Context & context, const char *)
 
     context.eglWindow = &nativewindow;
 
-        return EGL_TRUE;
+    return EGL_TRUE;
 }
 ///
 //  user_interrupt()
@@ -180,12 +174,13 @@ GLboolean user_interrupt(RPi::Context & context)
     GLboolean userinterrupt = EGL_FALSE;
     char text;
 
-     //Pump all messages from X server. Keypresses are directed to keyfunc(if defined)
+    //Pump all messages from X server. Keypresses are directed to keyfunc(if defined)
     while(XPending(x_display))
     {
         XNextEvent(x_display, &xev);
         if(xev.type == KeyPress)
         {
+            std::cout << "Key pressed : " << text << std::endl;
             if(XLookupString(&xev.xkey, &text, 1, &key, 0) == 1)
             {
                 if(context.keyFunc != nullptr)
@@ -237,6 +232,13 @@ GLboolean user_interrupt(RPi::Context & context)
         if(eglChooseConfig(display, attribList, &config, 1, &nbConfigs) == EGL_FALSE)
         {
             std::cerr << "Failed to choose configs" << std::endl;
+            return EGL_FALSE;
+        }
+
+        // Defines the current rendering API
+        if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
+        {
+            std::cerr << "Failed to bind EGL API" << std::endl;
             return EGL_FALSE;
         }
 
