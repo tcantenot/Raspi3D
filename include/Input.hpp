@@ -3,12 +3,16 @@
 
 #include <array>
 
-#include <SDL2/SDL.h>
+#include <SDL/SDL.h>
+
+//cf http://stackoverflow.com/questions/3741055/inputs-in-sdl-on-key-pressed
 
 namespace RPi {
     
 class Input
 {
+    using SDLKey = decltype(SDL_Event::key.keysym.sym);
+
     public:
 
     Input();
@@ -18,7 +22,7 @@ class Input
     void showMousePointer(bool show) const;
     void grabMousePointer(bool grab) const;
 
-    bool isKeyPressed(const SDL_Scancode key) const;
+    bool isKeyPressed(SDLKey key) const;
     bool isMouseBtnPressed(const Uint8 btn) const;
     bool mouseMoved() const;
     bool mouseWheelMoved() const;
@@ -34,7 +38,7 @@ class Input
     private:
 
     SDL_Event m_events;
-    std::array<bool, SDL_NUM_SCANCODES> m_keys;
+    std::array<bool, 322> m_keys;
     std::array<bool, 8> m_mouseBtns;
 
     int m_x;

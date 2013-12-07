@@ -35,32 +35,32 @@ void Camera::move(Input const & input)
         this->orient(input.getXRel(), input.getYRel());
     }
     
-    if(input.isKeyPressed(SDL_SCANCODE_UP))
+    if(input.isKeyPressed(SDLK_UP))
     {
         m_position += m_orientation * m_speed;
     }
 
-    if(input.isKeyPressed(SDL_SCANCODE_DOWN))
+    if(input.isKeyPressed(SDLK_DOWN))
     {
         m_position -= m_orientation * m_speed;
     }
 
-    if(input.isKeyPressed(SDL_SCANCODE_LEFT))
+    if(input.isKeyPressed(SDLK_LEFT))
     {
         m_position += m_sideShift * m_speed;
     }
 
-    if(input.isKeyPressed(SDL_SCANCODE_RIGHT))
+    if(input.isKeyPressed(SDLK_RIGHT))
     {
         m_position -= m_sideShift * m_speed;
     }
 
-    if(input.isKeyPressed(SDL_SCANCODE_RSHIFT))
+    if(input.isKeyPressed(SDLK_RSHIFT))
     {
         m_position += m_up * m_speed;
     }
 
-    if(input.isKeyPressed(SDL_SCANCODE_RCTRL))
+    if(input.isKeyPressed(SDLK_RCTRL))
     {
         m_position -= m_up * m_speed;
     }

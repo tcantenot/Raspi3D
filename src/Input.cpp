@@ -29,12 +29,12 @@ void Input::updateEvents()
         switch(m_events.type)
         {
             case SDL_KEYDOWN:
-                m_keys[m_events.key.keysym.scancode] = true;
+                m_keys[m_events.key.keysym.sym] = true;
             break;
 
 
             case SDL_KEYUP:
-                m_keys[m_events.key.keysym.scancode] = false;
+                m_keys[m_events.key.keysym.sym] = false;
             break;
 
 
@@ -57,9 +57,9 @@ void Input::updateEvents()
 
             break;
 
-            case SDL_MOUSEWHEEL:
-                m_wheel = static_cast<float>(m_events.wheel.y);
-            break;
+            //case SDL_MOUSEWHEEL:
+                //m_wheel = static_cast<float>(m_events.wheel.y);
+            //break;
 
             default: break;
         }
@@ -79,16 +79,17 @@ void Input::showMousePointer(bool show) const
 
 void Input::grabMousePointer(bool grab) const
 {
-    if(grab)
-        SDL_SetRelativeMouseMode(SDL_TRUE);
+    (void) grab;
+    //if(grab)
+        //SDL_SetRelativeMouseMode(SDL_TRUE);
 
-    else
-        SDL_SetRelativeMouseMode(SDL_FALSE);
+    //else
+        //SDL_SetRelativeMouseMode(SDL_FALSE);
 }
 
 
 
-bool Input::isKeyPressed(const SDL_Scancode key) const
+bool Input::isKeyPressed(SDLKey key) const
 {
     return m_keys[key];
 }

@@ -2,7 +2,7 @@
 #include <chrono>
 #include <iostream>
 
-#include <SDL2/SDL.h>
+#include <SDL/SDL.h>
 
 #include <glm/gtx/transform.hpp>
 
@@ -69,7 +69,7 @@ void TestApp::run()
         input.updateEvents();
 
         // Quit the app with escape
-        if(input.isKeyPressed(SDL_SCANCODE_ESCAPE))
+        if(input.isKeyPressed(SDLK_ESCAPE))
         {
             break;
         }
