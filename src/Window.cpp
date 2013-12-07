@@ -222,6 +222,7 @@ GLboolean user_interrupt(RPi::Context & context)
         }
 
         std::cout << "Initialize display OK" << std::endl;
+
         // Get configs
         EGLint nbConfigs;
         if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
@@ -229,6 +230,8 @@ GLboolean user_interrupt(RPi::Context & context)
             std::cerr << "Failed to get configs" << std::endl;
             return EGL_FALSE;
         }
+
+        std::cout << "Get config OK" << std::endl;
 
         // Choose config
          EGLConfig config;
@@ -238,12 +241,16 @@ GLboolean user_interrupt(RPi::Context & context)
             return EGL_FALSE;
         }
 
+        std::cout << "Choose config OK" << std::endl;
+
         // Defines the current rendering API
         if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
         {
             std::cerr << "Failed to bind EGL API" << std::endl;
             return EGL_FALSE;
         }
+
+        std::cout << "Bind API OK" << std::endl;
 
         // Create a surface
         #ifdef RPI_NO_X
@@ -261,6 +268,9 @@ GLboolean user_interrupt(RPi::Context & context)
             return EGL_FALSE;
         }
 
+        std::cout << "Create surface OK" << std::endl;
+
+
         // Create an EGL context
          EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
          if(context == EGL_NO_CONTEXT)
@@ -269,12 +279,16 @@ GLboolean user_interrupt(RPi::Context & context)
              return EGL_FALSE;
          }
 
+        std::cout << "Create context OK" << std::endl;
+
          // Make the context current
          if(eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
          {
             std::cerr << "Failed to make context current" << std::endl;
              return EGL_FALSE;
          }
+
+        std::cout << "Make context current OK" << std::endl;
 
          rpiContext.eglDisplay = display;
          rpiContext.eglSurface = surface;
