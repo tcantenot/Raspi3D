@@ -31,6 +31,9 @@ EGLBoolean create_window(RPi::Context & context, const char *)
 {
     static EGL_DISPMANX_WINDOW_T nativewindow;
 
+    uint32_t display_width = 0;
+    uint32_t display_height = 0;
+
     // create an EGL window surface, passing context width/height
     auto success = graphics_get_display_size(0 /* LCD */, 
         &display_width, &display_height);
@@ -40,8 +43,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
       return EGL_FALSE;
     }
 
-    auto display_width  = context.width;
-    auto display_height = context.height;
+    //auto display_width  = context.width;
+    //auto display_height = context.height;
 
     VC_RECT_T dst_rect;
     VC_RECT_T src_rect;
