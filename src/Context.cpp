@@ -15,7 +15,7 @@ Context::Context()
 
 Context::~Context()
 {
-    #ifdef RPI_NO_X
+    #ifdef __arm__
     bcm_host_deinit();
     #endif
 }

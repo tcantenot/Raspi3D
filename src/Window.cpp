@@ -5,7 +5,7 @@
 #include <Window.hpp>
 #include <EGLHeaders.hpp>
 
-#ifdef RPI_NO_X
+#ifdef __arm__
     #include "bcm_host.h"
 #else
     #include <X11/Xlib.h>
@@ -13,7 +13,7 @@
     #include <X11/Xutil.h>
 #endif
 
-#ifndef RPI_NO_X
+#ifndef __arm__
 // X11 related local variables
 static Display * x_display = nullptr;
 #endif
@@ -21,7 +21,7 @@ static Display * x_display = nullptr;
 namespace {
 
 
-#ifdef RPI_NO_X
+#ifdef __arm__
 ///
 //  create_window() - RaspberryPi, direct surface(No X, Xlib)
 //
@@ -200,7 +200,7 @@ GLboolean user_interrupt(RPi::Context & context)
         // Obtains the EGL display connection for the given native display 
         EGLDisplay display;
 
-        //#ifdef RPI_NO_X
+        //#ifdef __arm__
         display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
         //#else
         //display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
@@ -253,7 +253,7 @@ GLboolean user_interrupt(RPi::Context & context)
         std::cout << "Bind API OK" << std::endl;
 
         // Create a surface
-        #ifdef RPI_NO_X
+        #ifdef __arm__
         EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
         #else
         EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
