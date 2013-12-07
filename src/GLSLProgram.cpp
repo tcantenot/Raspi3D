@@ -129,39 +129,39 @@ bool GLSLProgram::link()
 {
     glLinkProgram(m_id);
 
-    GLenum glError = glGetError();
-    if(glError != GL_NO_ERROR) 
+    //GLenum glError = glGetError();
+    //if(glError != GL_NO_ERROR) 
+    //{
+        //fprintf(stderr, "glGetError() = %i (0x%.8x) at line %i\n", glError, glError, __LINE__);
+        //exit(1);
+    //}
+
+    //return true;
+
+    if(OpenGLIntrospection::ProgramLinkageSuccess(m_id))
     {
-        fprintf(stderr, "glGetError() = %i (0x%.8x) at line %i\n", glError, glError, __LINE__);
-        exit(1);
+        m_log = "Linkage successful";
+        return true;
     }
+    else
+    {
+        m_log = OpenGLIntrospection::ShaderProgramInfoLog(m_id);
 
-    return true;
+        if(m_log.length() > 1)
+        {
+            m_log = "Linkage error : " + m_log;
+        }
+        else
+        {
+            m_log = "Linkage failed and no info log found";
+        }
 
-    //if(OpenGLIntrospection::ProgramLinkageSuccess(m_id))
-    //{
-        //m_log = "Linkage successful";
-        //return true;
-    //}
-    //else
-    //{
-        //m_log = OpenGLIntrospection::ShaderProgramInfoLog(m_id);
+        std::cerr << "GLSLProgram::link : " + m_log << std::endl;
 
-        //if(m_log.length() > 1)
-        //{
-            //m_log = "Linkage error : " + m_log;
-        //}
-        //else
-        //{
-            //m_log = "Linkage failed and no info log found";
-        //}
+        glDeleteProgram(m_id);
 
-        //std::cerr << "GLSLProgram::link : " + m_log << std::endl;
-
-        //glDeleteProgram(m_id);
-
-        //return false;
-    //}
+        return false;
+    }
 }
 
 bool GLSLProgram::loadShaderFromFile(Enums::ShaderType type, std::string const & filename)
