@@ -260,7 +260,7 @@ GLboolean user_interrupt(RPi::Context & context)
         #endif
 
         EGLSurface surface = eglCreateWindowSurface(display, config,
-            static_cast<EGLNativeWindowType>(rpiContext.eglWindow), nullptr);
+            (EGLNativeWindowType) rpiContext.eglWindow, nullptr);
 
         if(surface == EGL_NO_SURFACE)
         {
@@ -290,11 +290,11 @@ GLboolean user_interrupt(RPi::Context & context)
 
         std::cout << "Make context current OK" << std::endl;
 
-         rpiContext.eglDisplay = display;
-         rpiContext.eglSurface = surface;
-         rpiContext.eglContext = context;
+        rpiContext.eglDisplay = display;
+        rpiContext.eglSurface = surface;
+        rpiContext.eglContext = context;
 
-         return EGL_TRUE;
+        return EGL_TRUE;
     }
 }
 
