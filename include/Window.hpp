@@ -5,39 +5,43 @@
 
 namespace RPi {
 
-    using WindowFlags = unsigned int;
-    enum WindowFlag : WindowFlags
-    {
-        WINDOW_NONE        = 0,
-        WINDOW_ALPHA       = 1 << 0,
-        WINDOW_DEPTH       = 1 << 1,
-        WINDOW_STENCIL     = 1 << 2,
-        WINDOW_MULTISAMPLE = 1 << 3
-    };
+using WindowFlags = unsigned int;
+enum WindowFlag : WindowFlags
+{
+    WINDOW_NONE        = 0,
+    WINDOW_ALPHA       = 1 << 0,
+    WINDOW_DEPTH       = 1 << 1,
+    WINDOW_STENCIL     = 1 << 2,
+    WINDOW_MULTISAMPLE = 1 << 3
+};
 
-    class Window
-    {
-        public:
-            Window(Context & context, char const * title,
-                int width, int height, WindowFlags flags = 0);
+class Window
+{
+    public:
+        Window(Context & context, char const * title,
+            int width, int height, WindowFlags flags = 0);
 
-            ~Window();
+        ~Window();
 
-            Context & getContext() const;
-            int getWidth() const;
-            int getHeight() const;
+        Context & getContext() const;
+        int getWidth() const;
+        int getHeight() const;
 
-            void display() const;
+        void display() const;
 
-            void init() const;
+        void grabMousePointer(bool grab) const;
+        void showMousePointer(bool show) const;
 
-            bool userInterrupt();
+        void init() const;
 
-        private:
-            int m_width;
-            int m_height;
-            Context & m_context;
-    };
+        bool userInterrupt();
+
+    private:
+        int m_width;
+        int m_height;
+        Context & m_context;
+};
+
 }
 
 #endif //WINDOW_HPP

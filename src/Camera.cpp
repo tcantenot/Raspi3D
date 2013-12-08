@@ -32,7 +32,8 @@ void Camera::move(Input const & input)
 {
     if(input.mouseMoved())
     {
-        this->orient(input.getXRel(), input.getYRel());
+        this->orient(static_cast<float>(input.getXRel()),
+            static_cast<float>(input.getYRel()));
     }
     
     if(input.isKeyPressed(SDLK_UP))
@@ -113,7 +114,7 @@ void Camera::target(glm::vec3 const & target)
 
     static auto const toDegree = [](float rad)
     {
-        return rad * 180.f / M_PI;
+        return static_cast<float>(rad * 180.f / M_PI);
     };
 
     m_phi = toDegree(m_phi);
@@ -168,7 +169,7 @@ void Camera::orient(float xRel, float yRel)
 
     static auto const toRadian = [](float deg)
     {
-        return deg * M_PI / 180.f;
+        return static_cast<float>(deg * M_PI / 180.f);
     };
 
     Angle phiRad   = toRadian(m_phi);

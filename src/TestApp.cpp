@@ -44,8 +44,9 @@ void TestApp::run()
     camera.up(glm::vec3(0, 1, 0));
 
     Input input;
-    input.showMousePointer(false);
-    input.grabMousePointer(true);
+
+    m_window.showMousePointer(false);
+    m_window.grabMousePointer(true);
 
     glm::mat4 projection;
     glm::mat4 modelview;
@@ -56,7 +57,7 @@ void TestApp::run()
     projection = glm::perspective(70.0, (double) m_window.getWidth() / m_window.getHeight(), 1.0, 100.0);
     modelview  = glm::mat4(1.0);
 
-    while(!quitting)
+    while(!m_window.userInterrupt() && !quitting)
     {
         // Reset timer
         auto t2 = std::chrono::high_resolution_clock::now();
@@ -82,8 +83,6 @@ void TestApp::run()
         glClear(GL_COLOR_BUFFER_BIT);
 
         modelview = camera.lookAt();
-
-        //modelview = glm::lookAt(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
         projection = camera.projection();
 

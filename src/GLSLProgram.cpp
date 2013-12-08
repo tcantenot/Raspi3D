@@ -129,13 +129,6 @@ bool GLSLProgram::link()
 {
     glLinkProgram(m_id);
 
-    //GLenum glError = glGetError();
-    //if(glError != GL_NO_ERROR) 
-    //{
-        //fprintf(stderr, "glGetError() = %i (0x%.8x) at line %i\n", glError, glError, __LINE__);
-        //exit(1);
-    //}
-
     return true;
 
     //if(OpenGLIntrospection::ProgramLinkageSuccess(m_id))
@@ -195,7 +188,7 @@ bool GLSLProgram::loadShader(Enums::ShaderType type, std::string const & source)
 
         //Flag the new shader for deletion
         //(when program is destroyed -> glDeleteProgram)
-        //glDeleteShader(shader);
+        glDeleteShader(shader);
 
         m_log = "Compilation successful";
 
@@ -230,8 +223,6 @@ void GLSLProgram::sendMatrix(std::string const & uniform, glm::mat4 const & matr
     auto location = this->getUniformLocation(uniform);
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
-
-
 
 void GLSLProgram::unbind() const
 {

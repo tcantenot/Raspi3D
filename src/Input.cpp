@@ -1,8 +1,12 @@
+#include <limits>
+
 #include <Input.hpp>
 
 namespace RPi {
 
-Input::Input() : m_x(0), m_y(0), m_xRel(0), m_yRel(0)
+Input::Input():
+    m_events(), m_keys(), m_mouseBtns(),
+    m_x(0), m_y(0), m_xRel(0), m_yRel(0), m_wheel(0)
 {
     for(auto & k : m_keys)
         k = false;
@@ -66,29 +70,6 @@ void Input::updateEvents()
     }
 }
 
-
-void Input::showMousePointer(bool show) const
-{
-    if(show)
-        SDL_ShowCursor(SDL_ENABLE);
-
-    else
-        SDL_ShowCursor(SDL_DISABLE);
-}
-
-
-void Input::grabMousePointer(bool grab) const
-{
-    (void) grab;
-    //if(grab)
-        //SDL_SetRelativeMouseMode(SDL_TRUE);
-
-    //else
-        //SDL_SetRelativeMouseMode(SDL_FALSE);
-}
-
-
-
 bool Input::isKeyPressed(SDLKey key) const
 {
     return m_keys[key];
@@ -108,7 +89,7 @@ bool Input::mouseMoved() const
 
 bool Input::mouseWheelMoved() const
 {
-    return m_wheel != 0;
+    return m_wheel > std::numeric_limits<float>::epsilon();
 }
 
 int Input::getX() const

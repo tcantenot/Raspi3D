@@ -377,6 +377,30 @@ void Window::display() const
     eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
 }
 
+
+void Window::showMousePointer(bool show) const
+{
+    if(show)
+        SDL_ShowCursor(SDL_ENABLE);
+
+    else
+        SDL_ShowCursor(SDL_DISABLE);
+}
+
+
+void Window::grabMousePointer(bool grab) const
+{
+    (void) grab;
+    //if(grab)
+        //SDL_SetRelativeMouseMode(SDL_TRUE);
+
+    //else
+        //SDL_SetRelativeMouseMode(SDL_FALSE);
+}
+
+
+
+
 void Window::init() const
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);

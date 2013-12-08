@@ -13,18 +13,21 @@ namespace RPi {
         using KeyFunc    = void(*)(Context &, unsigned char, int, int);
 
         Context();
+        Context(Context const &) = delete;
         ~Context();
 
-        EGLint width;
-        EGLint height;
-        EGLContext eglContext;
-        EGLDisplay eglDisplay;
-        EGLSurface eglSurface;
-        EGLNativeWindowType eglWindow;
+        Context & operator=(Context const &) = delete;
+
+        EGLint width  = 0;
+        EGLint height = 0;
+        EGLContext eglContext = EGL_NO_CONTEXT;
+        EGLDisplay eglDisplay = EGL_NO_DISPLAY;
+        EGLSurface eglSurface = EGL_NO_SURFACE;;
+        EGLNativeWindowType eglWindow = 0;
         GLSLProgram * program = nullptr;
-        DrawFunc drawFunc = nullptr;
+        DrawFunc drawFunc     = nullptr;
         UpdateFunc updateFunc = nullptr;
-        KeyFunc keyFunc = nullptr;
+        KeyFunc keyFunc       = nullptr;
     };
 }
 

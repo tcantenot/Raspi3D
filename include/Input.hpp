@@ -19,8 +19,6 @@ class Input
     ~Input();
 
     void updateEvents();
-    void showMousePointer(bool show) const;
-    void grabMousePointer(bool grab) const;
 
     bool isKeyPressed(SDLKey key) const;
     bool isMouseBtnPressed(const Uint8 btn) const;
