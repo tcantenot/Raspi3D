@@ -11,6 +11,7 @@
 #include <Cube.hpp>
 #include <PerspectiveCamera.hpp>
 #include <Input.hpp>
+#include <Terrain.hpp>
 
 
 namespace RPi {
@@ -33,13 +34,15 @@ void TestApp::run()
 
     Cube cube(5);
 
+    Terrain terrain(42, 42);
+
     auto t1 = std::chrono::high_resolution_clock::now();
 
     PerspectiveCamera camera(70.f, 
         static_cast<float>(m_window.getWidth()) / static_cast<float>(m_window.getHeight()),
         1.f, 100.f);
 
-    camera.position(glm::vec3(3, 3, 3));
+    camera.position(glm::vec3(30, 30, 30));
     camera.target(glm::vec3(0, 0, 0));
     camera.up(glm::vec3(0, 1, 0));
 
@@ -87,7 +90,8 @@ void TestApp::run()
         projection = camera.projection();
 
         // Render the cube
-        cube.render(*m_window.getContext().program, projection, modelview);
+        //cube.render(*m_window.getContext().program, projection, modelview);
+        terrain.render(*m_window.getContext().program, projection, modelview);
 
         // Refresh the window
         m_window.display();
@@ -107,6 +111,8 @@ void TestApp::run()
             nbFrames = 0;
         }
     }
+
+    std::cout << "END OF LOOP" << std::endl;
 }
 
 }

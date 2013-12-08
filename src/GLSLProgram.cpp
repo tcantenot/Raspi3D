@@ -29,7 +29,7 @@ namespace {
 
         // Get file length
         file.seekg(0, std::ifstream::end);
-        std::size_t length = file.tellg(); 
+        auto length = file.tellg(); 
         file.seekg(0, std::ifstream::beg);
 
         // Put the content of the file in a buffer

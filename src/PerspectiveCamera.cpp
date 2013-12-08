@@ -1,4 +1,5 @@
 #include <glm/gtx/transform.hpp>
+#include <iostream>
 
 #include <PerspectiveCamera.hpp>
 
@@ -15,6 +16,12 @@ PerspectiveCamera::PerspectiveCamera(float fov, float r,
     near(n);
     far(f);
     updateProjectionMatrix();
+}
+
+
+PerspectiveCamera::~PerspectiveCamera()
+{
+    std::cout << "PerspectiveCamera destroyed" << std::endl;
 }
 
 glm::mat4 const & PerspectiveCamera::projection()

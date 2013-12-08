@@ -124,9 +124,10 @@ float verticesTmp[] = {-1.0, -1.0, -1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,   
 
 Cube::~Cube()
 {
-    glDeleteBuffers(GL_ARRAY_BUFFER, &m_vbo);
-    glDeleteBuffers(GL_ARRAY_BUFFER, &m_vboIndices);
+    //glDeleteBuffers(GL_ARRAY_BUFFER, &m_vbo);
+    //glDeleteBuffers(GL_ELEMENT_ARRAY_BUFFER, &m_vboIndices);
     //glDeleteVertexArrays(1, &m_vao);
+    std::cout << "Cube destroyed" << std::endl;
 }
 
 void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4 & modelView)

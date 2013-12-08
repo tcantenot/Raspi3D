@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include <SDL/SDL.h>
 #include <glm/gtx/transform.hpp>
 
 #include <App.hpp>
@@ -11,6 +12,7 @@
 #include <OpenGL.hpp>
 #include <Window.hpp>
 
+#include <PerlinNoise.hpp>
 
 using namespace RPi;
 
@@ -90,7 +92,63 @@ int main(int argc, char const ** argv)
 
     app.run();
 
+    std::cout << "After run" << std::endl;
+
+    PerlinNoise pn(2.5, 3.5, 10.5, 8, 42);
+
+    for(int i = 0; i < 43; ++i)
+    {
+        std::cout << pn.GetHeight(i, i+1) << std::endl;
+    }
+
     return 0;
 }
+
+//int main(int argc, char *argv[])
+//{
+    //SDL_Surface* drawContext;
+    //Uint32 flags;
+
+    //if(SDL_Init(SDL_INIT_VIDEO) != 0)
+    //{
+        //std::cerr << "SDL_Init failed" << std::endl;
+    //}
+
+    //if(SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN) == nullptr)
+    //{
+        //std::cerr << "SDL_SetVideoMode failed" << std::endl;
+    //}
+
+    //SDL_GL_SwapBuffers();
+
+    //for(;;);
+
+    //[> Clear our buffer with a red background <]
+    //glClearColor ( 1.0, 0.0, 0.0, 1.0 );
+    //glClear ( GL_COLOR_BUFFER_BIT );
+    //[> Swap our back buffer to the front <]
+    //SDL_GL_SwapWindow(mainwindow);
+    //[> Wait 2 seconds <]
+    //SDL_Delay(2000);
+ 
+    //[> Same as above, but green <]
+    //glClearColor ( 0.0, 1.0, 0.0, 1.0 );
+    //glClear ( GL_COLOR_BUFFER_BIT );
+    //SDL_GL_SwapWindow(mainwindow);
+    //SDL_Delay(2000);
+ 
+    //[> Same as above, but blue <]
+    //glClearColor ( 0.0, 0.0, 1.0, 1.0 );
+    //glClear ( GL_COLOR_BUFFER_BIT );
+    //SDL_GL_SwapWindow(mainwindow);
+    //SDL_Delay(2000);
+ 
+    //[> Delete our opengl context, destroy our window, and shutdown SDL <]
+    //SDL_GL_DeleteContext(maincontext);
+    //SDL_DestroyWindow(mainwindow);
+    //SDL_Quit();
+ 
+    //return 0;
+//}
 
 

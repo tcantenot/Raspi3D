@@ -1,4 +1,5 @@
 #include <limits>
+#include <iostream>
 
 #include <Input.hpp>
 
@@ -18,7 +19,7 @@ Input::Input():
 
 Input::~Input()
 {
-
+    std::cout << "Input destroyed" << std::endl;
 }
 
 

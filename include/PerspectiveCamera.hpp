@@ -18,11 +18,12 @@ class PerspectiveCamera : public Camera
     public:
         PerspectiveCamera(float fovy = 70.f, float ratio = 1.f,
             float near = 1.f, float far = 100.f);
-        PerspectiveCamera(PerspectiveCamera const &) = default;
-        PerspectiveCamera(PerspectiveCamera &&) = default;
-        ~PerspectiveCamera() = default;
+        PerspectiveCamera(PerspectiveCamera const &) = delete;
+        PerspectiveCamera(PerspectiveCamera &&) = delete;
+        ~PerspectiveCamera();
 
-        PerspectiveCamera & operator=(PerspectiveCamera const &) = default;
+        PerspectiveCamera & operator=(PerspectiveCamera const &) = delete;
+        PerspectiveCamera & operator=(PerspectiveCamera &&) = delete;
 
         glm::mat4 const & projection();
 

@@ -188,8 +188,17 @@ GLboolean user_interrupt(RPi::Context & context)
             if(XLookupString(&xev.xkey, &text, 1, &key, 0) == 1)
             {
                 std::cout << "Key pressed : " << static_cast<unsigned int>(text) << std::endl;
+
+                static auto const key_equal = [](char text, unsigned int key)
+                {
+                    return static_cast<unsigned int>(text) == key;
+                };
+
                 if(context.keyFunc != nullptr)
                     context.keyFunc(context, text, 0, 0);
+
+                if(key_equal(text, 27))
+                    userinterrupt = EGL_TRUE;
             }
         }
         if(xev.type == DestroyNotify)
@@ -354,7 +363,7 @@ Window::Window(Context & context, char const * title,
 
 Window::~Window()
 {
-
+    std::cout << "Window destroyed" << std::endl;
 }
 
 Context & Window::getContext() const
