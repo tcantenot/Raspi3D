@@ -5,6 +5,8 @@
 #include <Window.hpp>
 #include <EGLHeaders.hpp>
 
+#include <SDL/SDL.h>
+
 #ifdef __arm__
     #include "bcm_host.h"
 #else
@@ -183,9 +185,9 @@ GLboolean user_interrupt(RPi::Context & context)
         XNextEvent(x_display, &xev);
         if(xev.type == KeyPress)
         {
-            std::cout << "Key pressed : " << text << std::endl;
             if(XLookupString(&xev.xkey, &text, 1, &key, 0) == 1)
             {
+                std::cout << "Key pressed : " << static_cast<unsigned int>(text) << std::endl;
                 if(context.keyFunc != nullptr)
                     context.keyFunc(context, text, 0, 0);
             }
@@ -309,6 +311,18 @@ Window::Window(Context & context, char const * title,
 {
     context.width  = width;
     context.height = height;
+
+    #ifdef __arm__
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        std::cerr << "SDL_Init failed" << std::endl;
+    }
+
+    if(SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN) == nullptr)
+    {
+        std::cerr << "SDL_SetVideoMode failed" << std::endl;
+    }
+    #endif
 
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)

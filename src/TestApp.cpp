@@ -56,7 +56,7 @@ void TestApp::run()
     projection = glm::perspective(70.0, (double) m_window.getWidth() / m_window.getHeight(), 1.0, 100.0);
     modelview  = glm::mat4(1.0);
 
-    while(!m_window.userInterrupt() && !quitting)
+    while(!quitting)
     {
         // Reset timer
         auto t2 = std::chrono::high_resolution_clock::now();
