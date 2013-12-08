@@ -68,9 +68,13 @@ void TestApp::run()
         // Get the events
         input.updateEvents();
 
+        // Move camera
+        camera.move(input);
+
         // Quit the app with escape
         if(input.isKeyPressed(SDLK_ESCAPE))
         {
+            std::cout << "Escape key pressed" << std::endl;
             break;
         }
     
