@@ -46,22 +46,6 @@ Terrain::Terrain(Size w, Size h):
 {
     PerlinNoise pn(2.5, 30, 5, 8, 42);
 
-    float * verticesTmp = new float[m_nbVertices * 3];
-
-    for(Size j = 0; j < h; ++j)
-    {
-        for(Size i = 0; i < w; ++i)
-        {
-            std::cout << (verticesTmp[(j * w + i) * 3 + 0] = i) << std::endl;
-            std::cout << (verticesTmp[(j * w + i) * 3 + 1] = j) << std::endl;
-            //std::cout << (verticesTmp[(j * w + i) * 3 + 2] = pn.GetHeight(i, j)) << std::endl;
-            std::cout << (verticesTmp[(j * w + i) * 3 + 2] = findnoise2(i, j)) << std::endl;
-        }
-    }
-
-    for(Size j = 0; j < w * h * 3; ++j)
-        std::cout << verticesTmp[j] << std::endl;
-
     std::vector<float> vertices;
 
     for(Size i = 0; i < w; ++i)
@@ -83,8 +67,6 @@ Terrain::Terrain(Size w, Size h):
     glBufferData(GL_ARRAY_BUFFER, m_nbVertices * 3 * sizeof(float),
         &vertices[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    delete verticesTmp;
 }
 
 
