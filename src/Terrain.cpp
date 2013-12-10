@@ -3,6 +3,7 @@
 #include <OpenGL.hpp>
 
 #include <iostream>
+#include <vector>
 
 namespace RPi {
 
@@ -23,28 +24,45 @@ Terrain::Terrain(Size w, Size h):
 {
     PerlinNoise pn(2.5, 30, 5, 8, 42);
 
-    float * vertices = new float[m_nbVertices * 3];
+    float * verticesTmp = new float[m_nbVertices * 3];
 
     for(Size j = 0; j < h; ++j)
     {
         for(Size i = 0; i < w; ++i)
         {
-            std::cout << (vertices[(j * w + i) * 3 + 0] = i) << std::endl;
-            std::cout << (vertices[(j * w + i) * 3 + 1] = j) << std::endl;
-            //std::cout << (vertices[(j * w + i) * 3 + 2] = pn.GetHeight(i, j)) << std::endl;
-            std::cout << (vertices[(j * w + i) * 3 + 2] = findnoise2(i, j)) << std::endl;
+            std::cout << (verticesTmp[(j * w + i) * 3 + 0] = i) << std::endl;
+            std::cout << (verticesTmp[(j * w + i) * 3 + 1] = j) << std::endl;
+            //std::cout << (verticesTmp[(j * w + i) * 3 + 2] = pn.GetHeight(i, j)) << std::endl;
+            std::cout << (verticesTmp[(j * w + i) * 3 + 2] = findnoise2(i, j)) << std::endl;
         }
     }
 
     for(Size j = 0; j < w * h * 3; ++j)
-        std::cout << vertices[j] << std::endl;
+        std::cout << verticesTmp[j] << std::endl;
+
+    std::vector<float> vertices;
+
+    for(Size i = 0; i < w; ++i)
+    {
+        for(Size j = 0; j < h; ++j)
+        {
+            vertices.push_back(i); vertices.push_back(j); vertices.push_back(findnoise2(i, j));
+            vertices.push_back(i); vertices.push_back(j+1); vertices.push_back(findnoise2(i, j+1));
+            vertices.push_back(i+1); vertices.push_back(j); vertices.push_back(findnoise2(i+1, j));
+            vertices.push_back(i+1); vertices.push_back(j+1); vertices.push_back(findnoise2(i+1, j+1));
+        }
+    }
+
+    m_nbVertices = vertices.size() / 3;
 
     glGenBuffers(1, &m_vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, m_nbVertices * 3 * sizeof(float),
-        vertices, GL_STATIC_DRAW);
+        &vertices[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    delete verticesTmp;
 }
 
 
