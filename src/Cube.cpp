@@ -21,40 +21,40 @@ Cube::Cube(float size): m_vao(0), m_vbo(0), m_vboIndices(0)
     //};
 
 
-    //float verticesTmp[] = {-size, -size, -size,    size, -size, -size,   size, size, -size,     // Face 1
-                       //-size, -size, -size,   -size, size, -size,    size, size, -size,     // Face 1
+    float verticesTmp[] = {-size, -size, -size,    size, -size, -size,   size, size, -size,     // Face 1
+                       -size, -size, -size,   -size, size, -size,    size, size, -size,     // Face 1
 
-                        //size, -size, size,     size, -size, -size,   size, size, -size,     // Face 2
-                        //size, -size, size,     size, size, size,     size, size, -size,     // Face 2
+                        size, -size, size,     size, -size, -size,   size, size, -size,     // Face 2
+                        size, -size, size,     size, size, size,     size, size, -size,     // Face 2
 
-                       //-size, -size, size,     size, -size, size,    size, -size, -size,    // Face 3
-                       //-size, -size, size,    -size, -size, -size,   size, -size, -size,    // Face 3
+                       -size, -size, size,     size, -size, size,    size, -size, -size,    // Face 3
+                       -size, -size, size,    -size, -size, -size,   size, -size, -size,    // Face 3
 
-                       //-size, -size, size,     size, -size, size,    size, size, size,      // Face 4
-                       //-size, -size, size,    -size, size, size,     size, size, size,      // Face 4
+                       -size, -size, size,     size, -size, size,    size, size, size,      // Face 4
+                       -size, -size, size,    -size, size, size,     size, size, size,      // Face 4
 
-                       //-size, -size, -size,   -size, -size, size,   -size, size, size,      // Face 5
-                       //-size, -size, -size,   -size, size, -size,   -size, size, size,      // Face 5
+                       -size, -size, -size,   -size, -size, size,   -size, size, size,      // Face 5
+                       -size, -size, -size,   -size, size, -size,   -size, size, size,      // Face 5
 
-                       //-size, size, size,      size, size, size,     size, size, -size,     // Face 6
-                       //-size, size, size,     -size, size, -size,    size, size, -size};    // Face 6 */
-float verticesTmp[] = {-1.0, -1.0, -1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
-                   -1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
+                       -size, size, size,      size, size, size,     size, size, -size,     // Face 6
+                       -size, size, size,     -size, size, -size,    size, size, -size};    // Face 6 */
+//float verticesTmp[] = {-1.0, -1.0, -1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
+                   //-1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
 
-                   1.0, -1.0, 1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,       // Face 2
-                   1.0, -1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 2
+                   //1.0, -1.0, 1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,       // Face 2
+                   //1.0, -1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 2
 
-                   -1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, -1.0, -1.0,      // Face 3
-                   -1.0, -1.0, 1.0,   -1.0, -1.0, -1.0,   1.0, -1.0, -1.0,    // Face 3
+                   //-1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, -1.0, -1.0,      // Face 3
+                   //-1.0, -1.0, 1.0,   -1.0, -1.0, -1.0,   1.0, -1.0, -1.0,    // Face 3
 
-                    -1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
-                    -1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
+                    //-1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
+                    //-1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
 
-                    -1.0, -1.0, -1.0,   -1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,     // Face 5
-                    -1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   -1.0, 1.0, 1.0,     // Face 5
+                    //-1.0, -1.0, -1.0,   -1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,     // Face 5
+                    //-1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   -1.0, 1.0, 1.0,     // Face 5
 
-                    -1.0, 1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 6
-                    -1.0, 1.0, 1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0};      // Face 6
+                    //-1.0, 1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 6
+                    //-1.0, 1.0, 1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0};      // Face 6
 
     float colorsTmp[] = {1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,     // Face 1
                      1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,     // Face 1
@@ -151,9 +151,9 @@ void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4
 
         //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, m_colors);
         //glEnableVertexAttribArray(1);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        //glDrawArrays(GL_TRIANGLES, 0, 36);
 
-        //glDrawArrays(GL_LINES, 0, 36);
+        glDrawArrays(GL_LINE_STRIP, 0, 108);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 

@@ -1,6 +1,7 @@
 #include <cassert>
 #include <chrono>
 #include <iostream>
+#include <vector>
 
 #include <SDL/SDL.h>
 
@@ -33,6 +34,15 @@ void TestApp::run()
     auto quitting = false;
 
     Cube cube(5);
+
+    std::vector<Cube> cubes;
+
+    for(int i = 0; i < 15; ++i)
+    {
+        cubes.emplace_back(i);                        
+    }
+
+    //std::cout << "Cube size : "
 
     Terrain terrain(42, 42);
 
@@ -91,6 +101,12 @@ void TestApp::run()
 
         // Render the cube
         //cube.render(*m_window.getContext().program, projection, modelview);
+
+        //for(auto & c : cubes)
+        //{
+            //c.render(*m_window.getContext().program, projection, modelview);
+        //}
+
         terrain.render(*m_window.getContext().program, projection, modelview);
 
         // Refresh the window
