@@ -318,8 +318,8 @@ Window::Window(Context & context, char const * title,
     int width, int height, WindowFlags flags):
     m_width(width), m_height(height), m_context(context)
 {
-    context.width  = width;
-    context.height = height;
+    context.width  = m_width;
+    context.height = m_height;
 
     #ifdef __arm__
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -327,10 +327,17 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    if(SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN) == nullptr)
+    auto screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    if(screen == nullptr)
     {
         std::cerr << "SDL_SetVideoMode failed" << std::endl;
     }
+
+    m_width  = screen->w;
+    m_height = screen->h;
+    context.width  = m_width;
+    context.height = m_height;
+
     #endif
 
     // Creates the window
