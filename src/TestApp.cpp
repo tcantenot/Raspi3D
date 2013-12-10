@@ -37,14 +37,16 @@ void TestApp::run()
 
     std::vector<Cube> cubes;
 
-    for(int i = 0; i < 15; ++i)
+    for(int i = 0; i < 150; ++i)
     {
         cubes.emplace_back(i);                        
     }
 
     //std::cout << "Cube size : "
 
-    Terrain terrain(42, 42);
+    Terrain terrain(500, 500);
+
+    Terrain terrain2(500, 500);
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
@@ -107,7 +109,10 @@ void TestApp::run()
             //c.render(*m_window.getContext().program, projection, modelview);
         //}
 
+        glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
         terrain.render(*m_window.getContext().program, projection, modelview);
+        glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
+        terrain2.render(*m_window.getContext().program, projection, modelview);
 
         // Refresh the window
         m_window.display();
