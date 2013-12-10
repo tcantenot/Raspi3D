@@ -46,10 +46,10 @@ Terrain::Terrain(Size w, Size h):
     {
         for(Size j = 0; j < h; ++j)
         {
-            vertices.push_back(i); vertices.push_back(j); vertices.push_back(findnoise2(i, j));
-            vertices.push_back(i); vertices.push_back(j+1); vertices.push_back(findnoise2(i, j+1));
-            vertices.push_back(i+1); vertices.push_back(j); vertices.push_back(findnoise2(i+1, j));
-            vertices.push_back(i+1); vertices.push_back(j+1); vertices.push_back(findnoise2(i+1, j+1));
+            vertices.push_back(i)  ; vertices.push_back(findnoise2(i, j)    ); vertices.push_back(j)  ;
+            vertices.push_back(i)  ; vertices.push_back(findnoise2(i, j+1)  ); vertices.push_back(j+1);
+            vertices.push_back(i+1); vertices.push_back(findnoise2(i+1, j)  ); vertices.push_back(j)  ;
+            vertices.push_back(i+1); vertices.push_back(findnoise2(i+1, j+1)); vertices.push_back(j+1);
         }
     }
 
