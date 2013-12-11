@@ -370,7 +370,7 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    //#ifdef __arm__
+    #ifdef __arm__
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         std::cerr << "SDL_Init failed" << std::endl;
@@ -388,7 +388,7 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    // Initialize SDL_ttf library
+     //Initialize SDL_ttf library
     if(TTF_Init() != 0)
     {
         std::cerr << "TTF_Init() Failed: " << TTF_GetError() << std::endl;
@@ -397,7 +397,7 @@ Window::Window(Context & context, char const * title,
     }
 
     load_font("res/fonts/FreeSans.ttf");
-    //#endif
+    #endif
 
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
