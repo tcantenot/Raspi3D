@@ -52,10 +52,13 @@ Terrain::Terrain(Size w, Size h):
     {
         for(Size j = 0; j < h; ++j)
         {
-            vertices.push_back(i)  ; vertices.push_back(noise(i, j)    ); vertices.push_back(j)  ;
-            vertices.push_back(i)  ; vertices.push_back(noise(i, j+1)  ); vertices.push_back(j+1);
-            vertices.push_back(i+1); vertices.push_back(noise(i+1, j)  ); vertices.push_back(j)  ;
-            vertices.push_back(i+1); vertices.push_back(noise(i+1, j+1)); vertices.push_back(j+1);
+            for(Size k = 0; k < 10; k += 5)
+            {
+                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   j+k*0.1f)  ); vertices.push_back(j+k*0.1f)  ;
+                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   j+k*0.1f+1)); vertices.push_back(j+k*0.1f+1);
+                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, j+k*0.1f)  ); vertices.push_back(j+k*0.1f)  ;
+                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, j+k*0.1f+1)); vertices.push_back(j+k*0.1f+1);
+            }
         }
     }
 
