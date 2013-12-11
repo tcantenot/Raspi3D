@@ -1,11 +1,13 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include <memory>
 
 #include <Window.hpp>
 #include <EGLHeaders.hpp>
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
 #ifdef __arm__
     #include "bcm_host.h"
@@ -209,6 +211,53 @@ GLboolean user_interrupt(RPi::Context & context)
 #endif
 
 
+
+
+    // Load a font
+    //std::shared_ptr<TTF_Font> s_font = nullptr;
+    TTF_Font * s_font = nullptr;
+
+    void load_font(std::string const & fontPath)
+    {
+        s_font = TTF_OpenFont(fontPath.c_str(), 24);
+        if (s_font == nullptr)
+        {
+            std::cerr << "TTF_OpenFont() Failed: " << TTF_GetError() << std::endl;
+            TTF_Quit();
+            SDL_Quit();
+            exit(1);
+        }
+    }
+
+    // Write text to surface
+    std::shared_ptr<SDL_Surface> s_text;
+    SDL_Color const s_text_color = {255, 255, 255, 255};
+    std::shared_ptr<SDL_Surface> s_screen = nullptr;
+
+    void display_text(std::string const & text)
+    {
+        s_text.reset(TTF_RenderText_Solid(s_font, text.c_str(), s_text_color));
+
+        if(s_text == nullptr)
+        {
+            std::cerr << "TTF_RenderText_Solid() Failed: " << TTF_GetError() << std::endl;
+            TTF_Quit();
+            SDL_Quit();
+            exit(1);
+        }
+
+        assert(s_screen != nullptr);
+
+        // Apply the text to the display
+        if (SDL_BlitSurface(s_text.get(), nullptr, s_screen.get(), nullptr) != 0)
+        {
+            std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
+        }
+
+        SDL_Flip(s_screen.get());
+    }
+
+
     EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
     {
         // Obtains the EGL display connection for the given native display 
@@ -321,24 +370,34 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    #ifdef __arm__
+    //#ifdef __arm__
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    auto screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
-    if(screen == nullptr)
+    s_screen.reset(SDL_SetVideoMode(m_width, m_height, 32, SDL_SWSURFACE));// | SDL_FULLSCREEN);
+
+    if(s_screen == nullptr)
     {
         std::cerr << "SDL_SetVideoMode failed" << std::endl;
     }
 
-    m_width  = screen->w;
-    m_height = screen->h;
+    m_width  = s_screen->w;
+    m_height = s_screen->h;
     context.width  = m_width;
     context.height = m_height;
 
-    #endif
+    // Initialize SDL_ttf library
+    if(TTF_Init() != 0)
+    {
+        std::cerr << "TTF_Init() Failed: " << TTF_GetError() << std::endl;
+        SDL_Quit();
+        exit(1);
+    }
+
+    load_font("res/fonts/FreeSans.ttf");
+    //#endif
 
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
@@ -393,6 +452,10 @@ void Window::display() const
     eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
 }
 
+void Window::displayText(std::string const & text) const
+{
+    display_text(text);
+}
 
 void Window::showMousePointer(bool show) const
 {
@@ -426,6 +489,5 @@ bool Window::userInterrupt()
 {
     return user_interrupt(m_context) == EGL_TRUE;
 }
-
 }
 

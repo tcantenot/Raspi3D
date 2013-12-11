@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
 #include <glm/gtx/transform.hpp>
 
@@ -116,6 +117,8 @@ void TestApp::run()
 
         // Refresh the window
         m_window.display();
+        m_window.displayText("Hello world !");
+
 
         // Get FPS
         totalTime += deltaTime;

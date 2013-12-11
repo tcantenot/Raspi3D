@@ -36,7 +36,7 @@ EXTERN_HDR_DIR = $(LIB_DIR)include/
 EXTERN_LIB_DIR = $(LIB_DIR)lib/
 
 # Extern libraries flags used for linking
-EXTERN_LIB_FLAGS = -lX11 -lEGL -lGLESv2 $(shell sdl-config --cflags) $(shell sdl-config --libs)# -lSDL2_image #-lGL -lGLEW -lGLU
+EXTERN_LIB_FLAGS = -lX11 -lEGL -lGLESv2 $(shell sdl-config --cflags) $(shell sdl-config --libs) -lSDL_ttf# -lSDL2_image #-lGL -lGLEW -lGLU
 
 # Defines
 DEBUG_DEFINES =

@@ -24,7 +24,7 @@ void Draw(Context & context);
 
 int main(int argc, char const ** argv)
 {
-    Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
+    //Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
 
     std::cout << Scheduler::GetSchedulerName(getpid()) << std::endl;
 

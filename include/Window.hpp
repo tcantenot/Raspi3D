@@ -28,6 +28,7 @@ class Window
         int getHeight() const;
 
         void display() const;
+        void displayText(std::string const & text) const;
 
         void grabMousePointer(bool grab) const;
         void showMousePointer(bool show) const;
