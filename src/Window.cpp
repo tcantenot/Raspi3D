@@ -376,7 +376,7 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    s_screen.reset(SDL_SetVideoMode(m_width, m_height, 32, SDL_SWSURFACE));// | SDL_FULLSCREEN);
+    s_screen.reset(SDL_SetVideoMode(m_width, m_height, 32, SDL_SWSURFACE | SDL_FULLSCREEN));
 
     if(s_screen == nullptr)
     {
@@ -387,6 +387,9 @@ Window::Window(Context & context, char const * title,
     m_height = s_screen->h;
     context.width  = m_width;
     context.height = m_height;
+
+    std::cout << "Window's width = " << m_width << std::endl;
+    std::cout << "Window's height = " << m_width << std::endl;
 
      //Initialize SDL_ttf library
     if(TTF_Init() != 0)
