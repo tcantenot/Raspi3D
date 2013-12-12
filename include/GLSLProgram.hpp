@@ -30,6 +30,7 @@ namespace RPi {
             bool loadShaderFromFile(Enums::ShaderType type, std::string const & filename);
             bool loadShader(Enums::ShaderType type, std::string const & source);
 
+            void sendFloat(std::string const & uniform, float f) const;
             void sendMatrix(std::string const & uniform, glm::mat4 const & matrix) const;
             void unbind() const;
 

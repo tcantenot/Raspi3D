@@ -34,7 +34,9 @@ TestApp::~TestApp()
 
 void TestApp::run()
 {
-    double totalTime = 0.0;
+    float timeFromStart = 0.f;
+    float timeFromStartTmp = 0.f;
+    float totalTime = 0.f;
     std::size_t nbFrames = 0;
     auto quitting = false;
 
@@ -105,6 +107,12 @@ void TestApp::run()
         modelview = camera.lookAt();
 
         projection = camera.projection();
+;
+        if(timeFromStart - timeFromStartTmp > 500.f)
+        {
+            timeFromStartTmp = timeFromStart;
+            m_window.getContext().program->sendFloat("time", timeFromStart);
+        }
 
         // Render the cube
         //cube.render(*m_window.getContext().program, projection, modelview);
@@ -124,6 +132,7 @@ void TestApp::run()
 
         // Get FPS
         totalTime += deltaTime;
+        timeFromStart += deltaTime;
         ++nbFrames;
 
         if(totalTime > 1000.0f)

@@ -224,6 +224,13 @@ void GLSLProgram::sendMatrix(std::string const & uniform, glm::mat4 const & matr
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void GLSLProgram::sendFloat(std::string const & uniform, float f) const
+{
+    this->bind();
+    auto location = this->getUniformLocation(uniform);
+    glUniform1f(location, f);
+}
+
 void GLSLProgram::unbind() const
 {
     glUseProgram(0);
