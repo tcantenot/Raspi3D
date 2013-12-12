@@ -151,7 +151,7 @@ void TestApp::run()
         // Render the cube
         cube.render(*m_window.getContext().program, projection, modelview);
 
-        for(auto i = 0; i < 10000000; ++i);
+        for(auto i = 0; i < 100000; ++i);
 
         for(auto & c : cubes)
         {
