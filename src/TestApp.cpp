@@ -95,7 +95,7 @@ void TestApp::run()
     modelview  = glm::mat4(1.0);
 
     static float const PI2 = 2 * M_PI;
-    static float const timeWaveStep = M_PI / 8;
+    static float const timeWaveStep = M_PI / 16;
     float timeWave = -PI2;
     float random = 1.f;
 
