@@ -423,7 +423,7 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    const SDL_VideoInfo* info = SDL_GetVideoInfo();   //<-- calls SDL_GetVideoInfo();   
+    auto info = SDL_GetVideoInfo();
     m_width = info->current_w;
     m_height = info->current_h;
 

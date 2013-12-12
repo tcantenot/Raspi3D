@@ -10,7 +10,7 @@ varying vec4 color;
 
 vec4 calc_color(float h)
 {
-    vec4 max_color = vec4(1.0, 0.0, 0.0, 1.0);
+    vec4 max_color = vec4(1.0, 0.2, 0.5, 1.0);
     vec4 min_color = vec4(0.0, 0.0, 1.0, 1.0);
 
     vec4 outColor = min_color + (h - (-maxHeight)) * (max_color - min_color) / (2.0 * maxHeight);
