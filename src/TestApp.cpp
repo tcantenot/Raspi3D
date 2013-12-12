@@ -151,11 +151,11 @@ void TestApp::run()
         // Render the cube
         cube.render(*m_window.getContext().program, projection, modelview);
 
-        for(auto & c : cubes)
-        {
+        //for(auto & c : cubes)
+        //{
             //c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
-            c.render(*m_window.getContext().program, projection, modelview);
-        }
+            //c.render(*m_window.getContext().program, projection, modelview);
+        //}
 
         //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
         terrain.render(*m_window.getContext().program, projection, modelview);
