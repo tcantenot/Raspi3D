@@ -139,7 +139,7 @@ void TestApp::run()
 
             timeWave += timeWaveStep;
 
-            std::cout << timeWave << std::endl;
+            //std::cout << timeWave << std::endl;
 
             timeFromStartTmp = timeFromStart;
 

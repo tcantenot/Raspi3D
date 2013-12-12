@@ -44,6 +44,9 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     auto success = graphics_get_display_size(0 /* LCD */, 
         &display_width, &display_height);
 
+    std::cout << "display_width :"  << display_width << std::endl;
+    std::cout << "display_height :"  << display_height << std::endl;
+
     if(success < 0)
     {
       return EGL_FALSE;
@@ -409,8 +412,8 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
-    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
