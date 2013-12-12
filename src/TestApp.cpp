@@ -29,7 +29,7 @@ namespace {
 
     void doLag()
     {
-        for(auto i = 0; i < 10000000; ++i);
+        for(auto i = 0; i < 5000000; ++i);
     }
 
     bool s_lag = false;
@@ -129,7 +129,8 @@ void TestApp::run()
             std::cout << "Lag : " << std::boolalpha << s_lag << std::endl;
         }
     
-        if(s_lag) doLag();
+        //if(s_lag) doLag();
+        doLag();
 
         // Clear the screen
         m_window.clear();
