@@ -55,7 +55,7 @@ Terrain::Terrain(Size w, Size h):
 
         for(Size j = 0; j < h; ++j)
         {
-            for(Size k = 0; k < 10; k += 10)
+            for(Size k = 0; k < 10; k += 2)
             {
                 auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f ;
 
