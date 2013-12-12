@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-#define LINUX_SDL_TEST
+//#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables

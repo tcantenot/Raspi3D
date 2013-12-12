@@ -1,4 +1,5 @@
 #include <iostream>
+#include <glm/gtx/transform.hpp>
 
 #include <Cube.hpp>
 #include <OpenGL.hpp>
@@ -6,7 +7,8 @@
 
 namespace RPi {
 
-Cube::Cube(float size): m_vao(0), m_vbo(0), m_vboIndices(0)
+Cube::Cube(float size):
+    m_vao(0), m_vbo(0), m_vboIndices(0), m_transform()
 {
     size /= 2;
 
@@ -113,8 +115,6 @@ Cube::Cube(float size): m_vao(0), m_vbo(0), m_vboIndices(0)
         3, 7
     };
 
-
-    
     glGenBuffers(1, &m_vboIndices);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vboIndices);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 24 * sizeof(unsigned int), nullptr, GL_STATIC_DRAW);
@@ -142,17 +142,17 @@ void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4
         glEnableVertexAttribArray(0);
 
         program.sendMatrix("MatProjection", projection);
-        program.sendMatrix("MatModelView", modelView);
+        program.sendMatrix("MatModelView", m_transform * modelView);
 
 
-        //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));
+        //glDrawElements(GL_LINE_STRIP, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));
 
 
         //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, m_colors);
         //glEnableVertexAttribArray(1);
         //glDrawArrays(GL_TRIANGLES, 0, 36);
 
-        glDrawArrays(GL_LINE_STRIP, 0, 108);
+        glDrawArrays(GL_LINE_STRIP, 0, 108 / 3);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -163,5 +163,11 @@ void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4
 
     program.unbind();
 }
+
+void Cube::rotate(float angle, glm::vec3 const & axis)
+{
+    m_transform = glm::rotate(m_transform, angle, axis);
+}
+
 
 }

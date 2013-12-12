@@ -54,7 +54,7 @@ void TestApp::run()
 
     std::vector<Cube> cubes;
 
-    for(int i = 0; i < 0; ++i)
+    for(int i = 0; i < 150; ++i)
     {
         cubes.emplace_back(i);                        
     }
@@ -147,12 +147,13 @@ void TestApp::run()
         }
 
         // Render the cube
-        //cube.render(*m_window.getContext().program, projection, modelview);
+        cube.render(*m_window.getContext().program, projection, modelview);
 
-        //for(auto & c : cubes)
-        //{
-            //c.render(*m_window.getContext().program, projection, modelview);
-        //}
+        for(auto & c : cubes)
+        {
+            c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
+            c.render(*m_window.getContext().program, projection, modelview);
+        }
 
         //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
         terrain.render(*m_window.getContext().program, projection, modelview);
