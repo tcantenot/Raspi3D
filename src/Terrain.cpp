@@ -49,11 +49,14 @@ Terrain::Terrain(Size w, Size h):
     std::vector<float> vertices;
 
     bool p = false;
-    for(Size i = 0; i < w; ++i)
+
+    float step = 0.5f;
+
+    for(float i = 0; i < w; i += step)
     {
         p = !p;
 
-        for(Size j = 0; j < h; ++j)
+        for(float j = 0; j < h; j += step)
         {
             for(Size k = 0; k < 10; k += 10)
             {

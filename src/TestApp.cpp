@@ -108,7 +108,7 @@ void TestApp::run()
 
         projection = camera.projection();
 ;
-        if(timeFromStart - timeFromStartTmp > 500.f)
+        if(timeFromStart - timeFromStartTmp > 100.f)
         {
             timeFromStartTmp = timeFromStart;
             m_window.getContext().program->sendFloat("time", timeFromStart);
