@@ -100,8 +100,8 @@ WARNINGS.cpp.debug  = -W -Wall -Wextra -Woverloaded-virtual \
 
 WARNING.cpp.release =
 
-CFLAGS.cpp.debug   = -std=c++11 $(WARNINGS.cpp.debug) $(DEBUG_DEFINES)
-CFLAGS.cpp.release = -std=c++11 $(WARNINGS.cpp.release) $(RELEASE_DEFINES)
+CFLAGS.cpp.debug   = -std=c++11 -g3 -O0 $(WARNINGS.cpp.debug) $(DEBUG_DEFINES)
+CFLAGS.cpp.release = -std=c++11 -g0 -03 $(WARNINGS.cpp.release) $(RELEASE_DEFINES)
 
 LDFLAGS.cpp.debug   = 
 LDFLAGS.cpp.release = 
