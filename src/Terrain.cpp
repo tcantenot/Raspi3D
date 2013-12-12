@@ -48,16 +48,21 @@ Terrain::Terrain(Size w, Size h):
 
     std::vector<float> vertices;
 
+    bool p = false;
     for(Size i = 0; i < w; ++i)
     {
+        p = !p;
+
         for(Size j = 0; j < h; ++j)
         {
-            for(Size k = 0; k < 10; k += 2)
+            for(Size k = 0; k < 10; k += 10)
             {
-                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   j+k*0.1f)  ); vertices.push_back(j+k*0.1f)  ;
-                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   j+k*0.1f+1)); vertices.push_back(j+k*0.1f+1);
-                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, j+k*0.1f)  ); vertices.push_back(j+k*0.1f)  ;
-                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, j+k*0.1f+1)); vertices.push_back(j+k*0.1f+1);
+                auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f ;
+
+                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ)  ); vertices.push_back(idxJ)  ;
+                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ+1)); vertices.push_back(idxJ+1);
+                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, idxJ)  ); vertices.push_back(idxJ)  ;
+                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, idxJ+1)); vertices.push_back(idxJ+1);
             }
         }
     }
