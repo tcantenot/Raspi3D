@@ -100,7 +100,7 @@ void TestApp::run()
         }
     
         // Clear the screen
-        glClear(GL_COLOR_BUFFER_BIT);
+        m_window.clear();
 
         modelview = camera.lookAt();
 
@@ -135,8 +135,6 @@ void TestApp::run()
                       << (static_cast<float>(nbFrames) / (totalTime / 1000.f));
             
             std::cout << fpsText.str() << std::endl;
-
-
 
             m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
 

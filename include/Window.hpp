@@ -27,6 +27,7 @@ class Window
         int getWidth() const;
         int getHeight() const;
 
+        void clear() const;
         void display() const;
         void displayText(std::string const & text) const;
 

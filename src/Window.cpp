@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-//#define LINUX_TEST
+#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -27,7 +27,7 @@ static Display * x_display = nullptr;
 namespace {
 
 
-#ifdef __arm__ || LINUX_TEST
+#if defined __arm__
 ///
 //  create_window() - RaspberryPi, direct surface(No X, Xlib)
 //
@@ -97,52 +97,6 @@ GLboolean user_interrupt(RPi::Context &)
     
     return GL_FALSE;
 }
-
-
-// Load a font
-//std::shared_ptr<TTF_Font> s_font = nullptr;
-TTF_Font * s_font = nullptr;
-
-void load_font(std::string const & fontPath)
-{
-    s_font = TTF_OpenFont(fontPath.c_str(), 24);
-    if (s_font == nullptr)
-    {
-        std::cerr << "TTF_OpenFont() Failed: " << TTF_GetError() << std::endl;
-        TTF_Quit();
-        SDL_Quit();
-        exit(1);
-    }
-}
-
-// Write text to surface
-SDL_Surface * s_text = nullptr;
-SDL_Color const s_text_color = {255, 255, 255, 255};
-SDL_Surface * s_screen = nullptr;
-
-void display_text(std::string const & text)
-{
-    s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
-
-    if(s_text == nullptr)
-    {
-        std::cerr << "TTF_RenderText_Solid() Failed: " << TTF_GetError() << std::endl;
-        TTF_Quit();
-        SDL_Quit();
-        exit(1);
-    }
-
-    assert(s_screen != nullptr);
-
-    // Apply the text to the display
-    if (SDL_BlitSurface(s_text, nullptr, s_screen, nullptr) != 0)
-    {
-        std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
-    }
-
-    SDL_Flip(s_screen);
-}
-
 
 #else
 ///
@@ -256,7 +210,55 @@ GLboolean user_interrupt(RPi::Context & context)
     }
     return userinterrupt;
 }
+#endif
 
+#if defined __arm__ || defined LINUX_SDL_TEST
+
+// Load a font
+//std::shared_ptr<TTF_Font> s_font = nullptr;
+TTF_Font * s_font = nullptr;
+
+void load_font(std::string const & fontPath)
+{
+    s_font = TTF_OpenFont(fontPath.c_str(), 24);
+    if (s_font == nullptr)
+    {
+        std::cerr << "TTF_OpenFont() Failed: " << TTF_GetError() << std::endl;
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+}
+
+// Write text to surface
+SDL_Surface * s_text = nullptr;
+SDL_Color const s_text_color = {255, 255, 255, 255};
+SDL_Surface * s_screen = nullptr;
+
+void display_text(std::string const & text)
+{
+    s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
+
+    if(s_text == nullptr)
+    {
+        std::cerr << "TTF_RenderText_Solid() Failed: " << TTF_GetError() << std::endl;
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+
+    assert(s_screen != nullptr);
+
+    // Apply the text to the display
+    if (SDL_BlitSurface(s_text, nullptr, s_screen, nullptr) != 0)
+    {
+        std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
+    }
+
+    SDL_Flip(s_screen);
+}
+
+#else
 
 void load_font(std::string const &)
 {
@@ -269,6 +271,10 @@ void display_text(std::string const &)
 }
 
 #endif
+
+
+
+
 
     EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
     {
@@ -381,7 +387,7 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    #ifdef __arm__ || LINUX_TEST
+    #if defined __arm__ || defined LINUX_SDL_TEST
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         std::cerr << "SDL_Init failed" << std::endl;
@@ -461,6 +467,19 @@ int Window::getHeight() const
     return m_height;
 }
 
+void Window::clear() const
+{
+    #if defined __arm__ || defined LINUX_SDL_TEST
+    // Clear the screen
+    if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    {
+        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+    }
+    #endif
+
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Window::display() const
 {
     eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
@@ -468,7 +487,10 @@ void Window::display() const
 
 void Window::displayText(std::string const & text) const
 {
+    // Ugly
+    glDisable(GL_DEPTH_TEST);
     display_text(text);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -497,6 +519,7 @@ void Window::grabMousePointer(bool grab) const
 void Window::init() const
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
+    glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()
