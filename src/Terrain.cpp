@@ -109,7 +109,7 @@ void Terrain::render(GLSLProgram const & program, glm::mat4 & projection, glm::m
         //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, m_colors);
         //glEnableVertexAttribArray(1);
         //glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDrawArrays(GL_LINE_STRIP, 0, m_nbVertices - 1);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, m_nbVertices - 2);
 
         //glDrawArrays(GL_LINES, 0, 36);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
