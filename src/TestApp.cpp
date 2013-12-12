@@ -61,7 +61,7 @@ void TestApp::run()
         c.translate(glm::vec3(i, 0, i));
     }
 
-    Terrain terrain(100, 100);
+    Terrain terrain(50, 50);
 
     //Terrain terrain2(500, 500);
 
@@ -150,6 +150,8 @@ void TestApp::run()
 
         // Render the cube
         cube.render(*m_window.getContext().program, projection, modelview);
+
+        for(auto i = 0; i < 10000000; ++i);
 
         //for(auto & c : cubes)
         //{
