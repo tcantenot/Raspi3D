@@ -393,7 +393,7 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -406,7 +406,7 @@ Window::Window(Context & context, char const * title,
     context.height = m_height;
 
     std::cout << "Window's width = " << m_width << std::endl;
-    std::cout << "Window's height = " << m_width << std::endl;
+    std::cout << "Window's height = " << m_height << std::endl;
 
      //Initialize SDL_ttf library
     if(TTF_Init() != 0)
@@ -471,10 +471,10 @@ void Window::clear() const
 {
     #if defined __arm__ || defined LINUX_SDL_TEST
     // Clear the screen
-    if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
-    {
-        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
-    }
+    //if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    //{
+        //std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+    //}
     #endif
 
     glClear(GL_COLOR_BUFFER_BIT);
