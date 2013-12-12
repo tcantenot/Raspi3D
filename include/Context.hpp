@@ -22,7 +22,7 @@ namespace RPi {
         EGLint height = 0;
         EGLContext eglContext = EGL_NO_CONTEXT;
         EGLDisplay eglDisplay = EGL_NO_DISPLAY;
-        EGLSurface eglSurface = EGL_NO_SURFACE;;
+        EGLSurface eglSurface = EGL_NO_SURFACE;
         EGLNativeWindowType eglWindow = 0;
         GLSLProgram * program = nullptr;
         DrawFunc drawFunc     = nullptr;

@@ -548,7 +548,7 @@ void Window::grabMousePointer(bool grab) const
 
 void Window::init() const
 {
-    glClearColor(1.0, 0.0, 0.0, 1.0);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     //glEnable(GL_DEPTH_TEST);
 }
 

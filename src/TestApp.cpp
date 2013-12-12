@@ -23,9 +23,8 @@
 #include <ctime>
 
 namespace {
-
     float frandom(float a, float b){
-        return (std::rand() / (float)RAND_MAX) * (b - a) + a;
+        return (std::rand() / static_cast<float>(RAND_MAX)) * (b - a) + a;
     }
 }
 
@@ -148,7 +147,7 @@ void TestApp::run()
         }
 
         // Render the cube
-        cube.render(*m_window.getContext().program, projection, modelview);
+        //cube.render(*m_window.getContext().program, projection, modelview);
 
         //for(auto & c : cubes)
         //{
@@ -156,7 +155,7 @@ void TestApp::run()
         //}
 
         //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
-        //terrain.render(*m_window.getContext().program, projection, modelview);
+        terrain.render(*m_window.getContext().program, projection, modelview);
         //glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
         //terrain2.render(*m_window.getContext().program, projection, modelview);
 
