@@ -110,15 +110,15 @@ void TestApp::run()
             //c.render(*m_window.getContext().program, projection, modelview);
         //}
 
-        glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
+        //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
         terrain.render(*m_window.getContext().program, projection, modelview);
-        glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
-        terrain2.render(*m_window.getContext().program, projection, modelview);
+        //glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
+        //terrain2.render(*m_window.getContext().program, projection, modelview);
+
 
         // Refresh the window
         m_window.display();
         m_window.displayText("Hello world !");
-
 
         // Get FPS
         totalTime += deltaTime;
