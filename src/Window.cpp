@@ -58,8 +58,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     VC_RECT_T dst_rect;
     VC_RECT_T src_rect;
 
-    dst_rect.x = 100;
-    dst_rect.y = 0;
+    dst_rect.x = context.x;
+    dst_rect.y = context.y;
     dst_rect.width = display_width;
     dst_rect.height = display_height;
       
@@ -68,12 +68,12 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     src_rect.width = display_width << 16;
     src_rect.height = display_height << 16;   
 
-    DISPMANX_DISPLAY_HANDLE_T dispman_display = vc_dispmanx_display_open(2 /* LCD */);
-    DISPMANX_UPDATE_HANDLE_T dispman_update  = vc_dispmanx_update_start(2);
+    DISPMANX_DISPLAY_HANDLE_T dispman_display = vc_dispmanx_display_open(0 /* LCD */);
+    DISPMANX_UPDATE_HANDLE_T dispman_update  = vc_dispmanx_update_start(0);
          
     DISPMANX_ELEMENT_HANDLE_T dispman_element = 
         vc_dispmanx_element_add(dispman_update, dispman_display,
-        1/*layer*/, &dst_rect, 0/*src*/, &src_rect, 
+        0/*layer*/, &dst_rect, 0/*src*/, &src_rect, 
         DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 0/*clamp*/, DISPMANX_NO_ROTATE/*transform*/);
       
     nativewindow.element = dispman_element;
@@ -128,7 +128,7 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
     // Create the new window
     Window window = XCreateWindow(
                 x_display, root,
-                0, 0, context.width, context.height, 0,
+                context.x, context.y, context.width, context.height, 0,
                 CopyFromParent, InputOutput,
                 CopyFromParent, CWEventMask,
                 &swa);
@@ -409,9 +409,11 @@ EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList
 namespace RPi {
 
 Window::Window(Context & context, char const * title,
-    int width, int height, WindowFlags flags):
+    int x, int y, int width, int height, WindowFlags flags):
     m_width(width), m_height(height), m_context(context)
 {
+    context.x = x;
+    context.y = y;
     context.width  = m_width;
     context.height = m_height;
 
@@ -428,9 +430,6 @@ Window::Window(Context & context, char const * title,
     std::cout << "screenWidth = " << m_width << std::endl;
     std::cout << "screenHeight = " << m_height << std::endl;
 
-    context.width  = m_width;
-    context.height = m_height;
-
     s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
@@ -442,6 +441,7 @@ Window::Window(Context & context, char const * title,
 
     m_width  = s_screen->w;
     m_height = s_screen->h;
+
     context.width  = m_width;
     context.height = m_height;
 

@@ -86,11 +86,30 @@ void Draw(Context & context);
         //return 0;
 /*}*/
 
+static struct Info
+{
+    std::string sched = "SCHED_NORMAL";
+    int priority = 0;
+    int x = 0;
+    int y = 0;
+    int w = 640;
+    int h = 480;
+} s_info;
+
 void parse_args(int argc, char ** argv);
 
 int main(int argc, char ** argv)
 {
     parse_args(argc, argv);
+
+    try {
+        Scheduler::SetScheduler(getpid(), s_info.sched, s_info.priority);
+    } catch(std::exception const & e) {
+        std::cerr << "Error : " << e.what() << std::endl;
+    }
+
+    std::cout << "Scheduler : " << s_info.sched << std::endl;
+    std::cout << "Priority  : " << s_info.priority << std::endl;
 
     //Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
 
@@ -103,7 +122,7 @@ int main(int argc, char ** argv)
 
     Context context;
 
-    RPi::Window window(context, "First App", 1020, 700);
+    RPi::Window window(context, "First App", s_info.x, s_info.y, s_info.w, s_info.h);
 
     std::cout << "Window created" << std::endl;
 
@@ -137,18 +156,28 @@ int main(int argc, char ** argv)
 void parse_args(int argc, char ** argv)
 {
     int c;
-    std::string scheduler = "default";
-    int priority = -1;
 
     while((c = getopt(argc, argv, "s:p:")) != -1)
     {
         switch(c)
         {
             case 's':
-                scheduler = optarg;
+                s_info.sched = optarg;
                 break;
             case 'p':
-                priority = Utils::Number<decltype(priority)>(optarg);
+                s_info.priority = Utils::Number<decltype(s_info.priority)>(optarg);
+                break;
+            case 'x': 
+                s_info.x = Utils::Number<decltype(s_info.x)>(optarg);
+                break;
+            case 'y': 
+                s_info.y = Utils::Number<decltype(s_info.y)>(optarg);
+                break;
+            case 'w': 
+                s_info.w = Utils::Number<decltype(s_info.w)>(optarg);
+                break;
+            case 'h': 
+                s_info.h = Utils::Number<decltype(s_info.h)>(optarg);
                 break;
             case '?':
                 if(optopt == 's')
@@ -164,15 +193,6 @@ void parse_args(int argc, char ** argv)
                 exit(2);
         }
     }
-
-    try {
-        Scheduler::SetScheduler(getpid(), scheduler, priority);
-    } catch(std::exception const & e) {
-        std::cerr << "Error : " << e.what() << std::endl;
-    }
-
-    std::cout << "Scheduler : " << scheduler << std::endl;
-    std::cout << "Priority  : " << priority << std::endl;
 }
 
 

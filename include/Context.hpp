@@ -18,6 +18,8 @@ namespace RPi {
 
         Context & operator=(Context const &) = delete;
 
+        EGLint x = 0;
+        EGLint y = 0;
         EGLint width  = 0;
         EGLint height = 0;
         EGLContext eglContext = EGL_NO_CONTEXT;

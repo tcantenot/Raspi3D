@@ -19,7 +19,7 @@ class Window
 {
     public:
         Window(Context & context, char const * title,
-            int width, int height, WindowFlags flags = 0);
+            int x, int y, int width, int height, WindowFlags flags = 0);
 
         ~Window();
 
