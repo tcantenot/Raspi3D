@@ -85,6 +85,7 @@ EGLBoolean create_window(RPi::Context & context, const char *)
 
     return EGL_TRUE;
 }
+
 ///
 //  user_interrupt()
 //
@@ -356,7 +357,8 @@ EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList
     // Defines the current rendering API
     if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
     {
-        std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE; }
+        std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE;
+    }
 
     std::cout << "Bind API OK" << std::endl;
 
@@ -430,9 +432,9 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
