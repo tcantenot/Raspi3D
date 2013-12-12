@@ -58,20 +58,28 @@ Terrain::Terrain(Size w, Size h):
 
         for(float j = 0; j < h; j += step)
         {
-            for(Size k = 0; k < 10; k += 10)
-            {
+            auto idxJ = p ? j : h - j;
+            auto nextJ = idxJ + (p ? 1.f : -1.f);
+
+            vertices.push_back(i)    ; vertices.push_back(noise(i,     idxJ) ); vertices.push_back(idxJ) ;
+            vertices.push_back(i)    ; vertices.push_back(noise(i,     nextJ)); vertices.push_back(nextJ);
+            vertices.push_back(i+1.f); vertices.push_back(noise(i+1.f, idxJ) ); vertices.push_back(idxJ) ;
+            vertices.push_back(i+1.f); vertices.push_back(noise(i+1.f, nextJ)); vertices.push_back(nextJ);
+            
+            //for(Size k = 0; k < 10; k += 10)
+            //{
                 //auto idxJ  = j + k * 0.1f;
                 //auto nextJ = j + k * 0.1f + 1.f;
-                auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f;
-                auto nextJ = p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
+                //auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f;
+                //auto nextJ = p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
 
                 //std::cout << idxJ << std::endl;
 
-                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ)  ); vertices.push_back(idxJ)  ;
-                vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   nextJ)); vertices.push_back(nextJ);
-                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, idxJ)  ); vertices.push_back(idxJ)  ;
-                vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, nextJ)); vertices.push_back(nextJ);
-            }
+                //vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ)  ); vertices.push_back(idxJ)  ;
+                //vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   nextJ)); vertices.push_back(nextJ);
+                //vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, idxJ)  ); vertices.push_back(idxJ)  ;
+                //vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, nextJ)); vertices.push_back(nextJ);
+            //}
         }
     }
 
