@@ -100,7 +100,7 @@ void TestApp::run()
         }
     
         // Clear the screen
-        m_window.clear();
+        glClear(GL_COLOR_BUFFER_BIT);
 
         modelview = camera.lookAt();
 
