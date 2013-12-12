@@ -18,6 +18,8 @@ class Cube
 
         void rotate(float angle, glm::vec3 const & axis);
 
+        void translate(glm::vec3 const & axis);
+
     protected:
         float m_vertices[108];
         float m_colors[108];

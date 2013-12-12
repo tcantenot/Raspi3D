@@ -103,7 +103,7 @@ int main(int argc, char ** argv)
 
     Context context;
 
-    RPi::Window window(context, "First App", 640, 480);
+    RPi::Window window(context, "First App", 1020, 700);
 
     std::cout << "Window created" << std::endl;
 

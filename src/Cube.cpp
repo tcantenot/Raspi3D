@@ -40,23 +40,6 @@ Cube::Cube(float size):
 
                        -size, size, size,      size, size, size,     size, size, -size,     // Face 6
                        -size, size, size,     -size, size, -size,    size, size, -size};    // Face 6 */
-//float verticesTmp[] = {-1.0, -1.0, -1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
-                   //-1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0,     // Face 1
-
-                   //1.0, -1.0, 1.0,   1.0, -1.0, -1.0,   1.0, 1.0, -1.0,       // Face 2
-                   //1.0, -1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 2
-
-                   //-1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, -1.0, -1.0,      // Face 3
-                   //-1.0, -1.0, 1.0,   -1.0, -1.0, -1.0,   1.0, -1.0, -1.0,    // Face 3
-
-                    //-1.0, -1.0, 1.0,   1.0, -1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
-                    //-1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,   1.0, 1.0, 1.0,        // Face 4
-
-                    //-1.0, -1.0, -1.0,   -1.0, -1.0, 1.0,   -1.0, 1.0, 1.0,     // Face 5
-                    //-1.0, -1.0, -1.0,   -1.0, 1.0, -1.0,   -1.0, 1.0, 1.0,     // Face 5
-
-                    //-1.0, 1.0, 1.0,   1.0, 1.0, 1.0,   1.0, 1.0, -1.0,         // Face 6
-                    //-1.0, 1.0, 1.0,   -1.0, 1.0, -1.0,   1.0, 1.0, -1.0};      // Face 6
 
     float colorsTmp[] = {1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,     // Face 1
                      1.0, 0.0, 0.0,   1.0, 0.0, 0.0,   1.0, 0.0, 0.0,     // Face 1
@@ -142,7 +125,7 @@ void Cube::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4
         glEnableVertexAttribArray(0);
 
         program.sendMatrix("MatProjection", projection);
-        program.sendMatrix("MatModelView", m_transform * modelView);
+        program.sendMatrix("MatModelView", modelView * m_transform);
 
 
         //glDrawElements(GL_LINE_STRIP, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));
@@ -169,5 +152,9 @@ void Cube::rotate(float angle, glm::vec3 const & axis)
     m_transform = glm::rotate(m_transform, angle, axis);
 }
 
+void Cube::translate(glm::vec3 const & axis)
+{
+    m_transform = glm::translate(m_transform, axis);
+}
 
 }

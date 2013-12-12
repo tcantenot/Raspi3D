@@ -54,9 +54,11 @@ void TestApp::run()
 
     std::vector<Cube> cubes;
 
-    for(int i = 0; i < 150; ++i)
+    for(int i = 0; i < 5; ++i)
     {
         cubes.emplace_back(i);                        
+        auto & c = cubes[i];
+        c.translate(glm::vec3(i, 0, i));
     }
 
     Terrain terrain(100, 100);
