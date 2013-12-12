@@ -78,7 +78,7 @@ void TestApp::run()
         static_cast<float>(m_window.getWidth()) / static_cast<float>(m_window.getHeight()),
         1.f, 100.f);
 
-    camera.position(glm::vec3(30, 30, 30));
+    camera.position(glm::vec3(20, 20, 20));
     camera.target(glm::vec3(0, 0, 0));
     camera.up(glm::vec3(0, 1, 0));
 
@@ -125,11 +125,12 @@ void TestApp::run()
 
         if(input.isKeyPressed(SDLK_l))
         {
-            if(!s_lag) doLag();
             s_lag = !s_lag;
             std::cout << "Lag : " << std::boolalpha << s_lag << std::endl;
         }
     
+        if(s_lag) doLag();
+
         // Clear the screen
         m_window.clear();
 
