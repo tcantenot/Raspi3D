@@ -510,7 +510,7 @@ int Window::getHeight() const
 
 void Window::clear() const
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Window::display() const
@@ -520,9 +520,9 @@ void Window::display() const
 
 void Window::displayText(std::string const & text) const
 {
-    //glDisable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
     display_text(text);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -549,7 +549,7 @@ void Window::grabMousePointer(bool grab) const
 void Window::init() const
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()
