@@ -113,10 +113,12 @@ int main(int argc, char const ** argv)
 
     app.registerDrawFunc(Draw);
 
-    std::cout << "Creating thread" << std::endl;
-    std::thread t(app);
-    std::cout << "Thread created" << std::endl;
-    t.join();
+    app.run();
+
+    //std::cout << "Creating thread" << std::endl;
+    //std::thread t(app);
+    //std::cout << "Thread created" << std::endl;
+    //t.join();
 
     std::cout << "THIS IS THE END" << std::endl;
 
