@@ -42,7 +42,8 @@ inline double noise(double x, double y)
 }
 
 Terrain::Terrain(Size w, Size h):
-    m_vbo(0), m_w(w), m_h(h), m_nbVertices(w * h)
+    m_vbo(0), m_w(w), m_h(h), m_nbVertices(w * h),
+    m_minHeight(0), m_maxHeight(0)
 {
     PerlinNoise pn(2.5, 30, 5, 8, 42);
 
@@ -61,10 +62,23 @@ Terrain::Terrain(Size w, Size h):
             auto idxJ = p ? j : h - j;
             auto nextJ = idxJ + (p ? step : -step);
 
-            vertices.push_back(i)     ; vertices.push_back(noise(i,      idxJ) ); vertices.push_back(idxJ) ;
-            vertices.push_back(i)     ; vertices.push_back(noise(i,      nextJ)); vertices.push_back(nextJ);
-            vertices.push_back(i+step); vertices.push_back(noise(i+step, idxJ) ); vertices.push_back(idxJ) ;
-            vertices.push_back(i+step); vertices.push_back(noise(i+step, nextJ)); vertices.push_back(nextJ);
+            float h = 0;
+
+            h = noise(i, idxJ);
+            if(h > m_maxHeight) m_maxHeight = h;
+            vertices.push_back(i)     ; vertices.push_back(h); vertices.push_back(idxJ) ;
+
+            h = noise(i, nextJ);
+            if(h > m_maxHeight) m_maxHeight = h;
+            vertices.push_back(i)     ; vertices.push_back(h); vertices.push_back(nextJ);
+
+            h = noise(i + step, idxJ);
+            if(h > m_maxHeight) m_maxHeight = h;
+            vertices.push_back(i+step); vertices.push_back(h); vertices.push_back(idxJ) ;
+
+            h = noise(i + step, nextJ);
+            if(h > m_maxHeight) m_maxHeight = h;
+            vertices.push_back(i+step); vertices.push_back(h); vertices.push_back(nextJ);
         }
     }
 
@@ -84,6 +98,10 @@ Terrain::~Terrain()
 
 }
 
+float Terrain::getMaxHeight() const
+{
+    return m_maxHeight;
+}
 
 void Terrain::render(GLSLProgram const & program, glm::mat4 & projection, glm::mat4 & modelView)
 {
@@ -99,6 +117,7 @@ void Terrain::render(GLSLProgram const & program, glm::mat4 & projection, glm::m
 
         program.sendMatrix("MatProjection", projection);
         program.sendMatrix("MatModelView", modelView);
+        program.sendFloat("maxHeight", m_maxHeight);
 
 
         //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));

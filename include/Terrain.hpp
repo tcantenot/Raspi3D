@@ -19,6 +19,8 @@ class Terrain
         Terrain(Size w, Size h);
         ~Terrain();
 
+        float getMaxHeight() const;
+
         void render(GLSLProgram const & program, glm::mat4 & projection,
             glm::mat4 & modelView);
 
@@ -27,7 +29,8 @@ class Terrain
         Size m_w;
         Size m_h;
         Size m_nbVertices;
-
+        float m_minHeight;
+        float m_maxHeight;
 };
 
 }
