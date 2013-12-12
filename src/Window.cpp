@@ -53,7 +53,7 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     }
 
     display_width  = context.width;
-    display_height = context.height;
+    //display_height = context.height;
 
     VC_RECT_T dst_rect;
     VC_RECT_T src_rect;
@@ -421,6 +421,7 @@ Window::Window(Context & context, char const * title,
     context.height = m_height;
 
     s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
