@@ -14,7 +14,7 @@ vec4 calc_color(float h)
     vec4 min_color = vec4(0.0, 0.0, 1.0, 1.0);
 
     
-    vec4 outColor = min_color + (h) * (max_color - min_color) / (2.0 * maxHeight);
+    vec4 outColor = h * (max_color - min_color) / (2.0 * maxHeight);
 
     return vec4(outColor.xyz, 1.0);
 }
