@@ -110,9 +110,11 @@ int main(int argc, char ** argv)
     GLSLProgram program;
     context.program = &program;
     program.loadShaderFromFile(Enums::ShaderType_VertexShader, "./shaders/shader.vs");
+    std::cout << program.getLog() << std::endl;
     program.loadShaderFromFile(Enums::ShaderType_FragmentShader, "./shaders/shader.fs");
     std::cout << program.getLog() << std::endl;
     program.link();
+    std::cout << program.getLog() << std::endl;
 
     window.init();
 

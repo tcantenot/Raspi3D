@@ -6,7 +6,7 @@ uniform float time;
 uniform float random;
 uniform float maxHeight;
 
-varying vec4 color;
+/*varying vec4 color;*/
 
 vec4 calc_color(float h)
 {
@@ -22,7 +22,7 @@ void main()
 {
     float h = VertexPosition.y * cos(time) * random;
     /*color = calc_color(h);*/
-    color = vec4(0.0, 0.0, 1.0, 1.0);
+    /*color = vec4(0.0, 0.0, 1.0, 1.0);*/
     vec4 cam_pos = MatModelView * vec4(VertexPosition.x, h, VertexPosition.zw);
     gl_Position  = MatProjection * cam_pos;
     /*gl_Position = VertexPosition;*/

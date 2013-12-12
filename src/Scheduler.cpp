@@ -59,7 +59,6 @@ void Scheduler::SetScheduler(pid_t pid, SchedulerType sched, int priority)
 void Scheduler::SetScheduler(pid_t pid, std::string const & sched, int priority)
     throw(std::runtime_error)
 {
-    std::cout << "sched : " << s_schedNamesFromType[s_schedTypesFromName[sched]] << std::endl;
     Scheduler::SetScheduler(pid, s_schedTypesFromName[sched], priority);
 }
 

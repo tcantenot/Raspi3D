@@ -183,7 +183,7 @@ void TestApp::run()
             
             std::cout << fpsText.str() << std::endl;
 
-            //m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
+            m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
 
             totalTime -= 1000.0f;
             nbFrames = 0;
