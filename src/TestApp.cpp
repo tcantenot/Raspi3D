@@ -31,6 +31,8 @@ namespace {
     {
         for(auto i = 0; i < 10000000; ++i);
     }
+
+    bool s_lag = false;
 }
 
 namespace RPi {
@@ -123,7 +125,8 @@ void TestApp::run()
 
         if(input.isKeyPressed(SDLK_l))
         {
-            doLag();
+            if(!s_lag) doLag();
+            s_lag = !s_lag;
         }
     
         // Clear the screen
