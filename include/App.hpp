@@ -13,11 +13,9 @@ namespace RPi {
             virtual ~App();
 
             App() = delete;
-            App(App const &) = delete;
-            App(App &&) = delete;
 
-            App & operator=(App const &) = delete;
-            App & operator=(App &&) = delete;
+            // Method called by std::thread
+            void operator()();
 
             void registerDrawFunc(Context::DrawFunc drawFunc);
             void registerUpdateFunc(Context::UpdateFunc updateFunc);

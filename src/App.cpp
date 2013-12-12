@@ -16,6 +16,12 @@ App::~App()
 
 }
 
+void App::operator()()
+{
+    std::cout << "App::()()" << std::endl;
+    this->run();
+    std::cout << "After App::()()" << std::endl;
+}
 
 void App::registerDrawFunc(Context::DrawFunc drawFunc)
 {

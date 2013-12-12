@@ -1,5 +1,6 @@
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
+#include <thread>
 
 #include <SDL/SDL.h>
 #include <glm/gtx/transform.hpp>
@@ -112,7 +113,12 @@ int main(int argc, char const ** argv)
 
     app.registerDrawFunc(Draw);
 
-    app.run();
+    std::cout << "Creating thread" << std::endl;
+    std::thread t(app);
+    std::cout << "Thread created" << std::endl;
+    t.join();
+
+    std::cout << "THIS IS THE END" << std::endl;
 
     return 0;
 }

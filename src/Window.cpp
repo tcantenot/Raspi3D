@@ -96,6 +96,52 @@ GLboolean user_interrupt(RPi::Context &)
     return GL_FALSE;
 }
 
+
+// Load a font
+//std::shared_ptr<TTF_Font> s_font = nullptr;
+__thread TTF_Font * s_font = nullptr;
+
+void load_font(std::string const & fontPath)
+{
+    s_font = TTF_OpenFont(fontPath.c_str(), 24);
+    if (s_font == nullptr)
+    {
+        std::cerr << "TTF_OpenFont() Failed: " << TTF_GetError() << std::endl;
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+}
+
+// Write text to surface
+__thread SDL_Surface * s_text = nullptr;
+__thread SDL_Color const s_text_color = {255, 255, 255, 255};
+__thread SDL_Surface * s_screen = nullptr;
+
+void display_text(std::string const & text)
+{
+    s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
+
+    if(s_text == nullptr)
+    {
+        std::cerr << "TTF_RenderText_Solid() Failed: " << TTF_GetError() << std::endl;
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+
+    assert(s_screen != nullptr);
+
+    // Apply the text to the display
+    if (SDL_BlitSurface(s_text, nullptr, s_screen, nullptr) != 0)
+    {
+        std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
+    }
+
+    SDL_Flip(s_screen);
+}
+
+
 #else
 ///
 //  create_window()
@@ -208,55 +254,19 @@ GLboolean user_interrupt(RPi::Context & context)
     }
     return userinterrupt;
 }
+
+
+void load_font(std::string const &)
+{
+
+}
+
+void display_text(std::string const &)
+{
+
+}
+
 #endif
-
-
-
-
-    // Load a font
-    //std::shared_ptr<TTF_Font> s_font = nullptr;
-    TTF_Font * s_font = nullptr;
-
-    void load_font(std::string const & fontPath)
-    {
-        s_font = TTF_OpenFont(fontPath.c_str(), 24);
-        if (s_font == nullptr)
-        {
-            std::cerr << "TTF_OpenFont() Failed: " << TTF_GetError() << std::endl;
-            TTF_Quit();
-            SDL_Quit();
-            exit(1);
-        }
-    }
-
-    // Write text to surface
-    std::shared_ptr<SDL_Surface> s_text;
-    SDL_Color const s_text_color = {255, 255, 255, 255};
-    std::shared_ptr<SDL_Surface> s_screen = nullptr;
-
-    void display_text(std::string const & text)
-    {
-        s_text.reset(TTF_RenderText_Solid(s_font, text.c_str(), s_text_color));
-
-        if(s_text == nullptr)
-        {
-            std::cerr << "TTF_RenderText_Solid() Failed: " << TTF_GetError() << std::endl;
-            TTF_Quit();
-            SDL_Quit();
-            exit(1);
-        }
-
-        assert(s_screen != nullptr);
-
-        // Apply the text to the display
-        if (SDL_BlitSurface(s_text.get(), nullptr, s_screen.get(), nullptr) != 0)
-        {
-            std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
-        }
-
-        SDL_Flip(s_screen.get());
-    }
-
 
     EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
     {
@@ -309,8 +319,7 @@ GLboolean user_interrupt(RPi::Context & context)
         // Defines the current rendering API
         if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
         {
-            std::cerr << "Failed to bind EGL API" << std::endl;
-            return EGL_FALSE;
+            std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE;
         }
 
         std::cout << "Bind API OK" << std::endl;
@@ -399,8 +408,9 @@ Window::Window(Context & context, char const * title,
         exit(1);
     }
 
-    load_font("res/fonts/FreeSans.ttf");
     #endif
+
+    load_font("res/fonts/FreeSans.ttf");
 
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
@@ -492,5 +502,6 @@ bool Window::userInterrupt()
 {
     return user_interrupt(m_context) == EGL_TRUE;
 }
+
 }
 
