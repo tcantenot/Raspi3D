@@ -49,9 +49,9 @@ void TestApp::run()
 
     //std::cout << "Cube size : "
 
-    Terrain terrain(500, 500);
+    Terrain terrain(50, 50);
 
-    Terrain terrain2(500, 500);
+    //Terrain terrain2(500, 500);
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
