@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-//#define LINUX_SDL_TEST
+#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -403,8 +403,6 @@ Window::Window(Context & context, char const * title,
     int width, int height, WindowFlags flags):
     m_width(width), m_height(height), m_context(context)
 {
-    context.width  = m_width;
-    context.height = m_height;
 
     #if defined __arm__ || defined LINUX_SDL_TEST
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -412,7 +410,17 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_OPENGLES);// | SDL_FULLSCREEN);
+    const SDL_VideoInfo* info = SDL_GetVideoInfo();   //<-- calls SDL_GetVideoInfo();   
+    m_width = info->current_w;
+    m_height = info->current_h;
+
+    std::cout << "screenWidth = " << m_width << std::endl;
+    std::cout << "screenHeight = " << m_height << std::endl;
+
+    context.width  = m_width;
+    context.height = m_height;
+
+    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
