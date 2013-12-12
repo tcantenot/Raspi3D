@@ -58,7 +58,7 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     VC_RECT_T dst_rect;
     VC_RECT_T src_rect;
 
-    dst_rect.x = 0;
+    dst_rect.x = 100;
     dst_rect.y = 0;
     dst_rect.width = display_width;
     dst_rect.height = display_height;
@@ -73,7 +73,7 @@ EGLBoolean create_window(RPi::Context & context, const char *)
          
     DISPMANX_ELEMENT_HANDLE_T dispman_element = 
         vc_dispmanx_element_add(dispman_update, dispman_display,
-        0/*layer*/, &dst_rect, 0/*src*/, &src_rect, 
+        1/*layer*/, &dst_rect, 0/*src*/, &src_rect, 
         DISPMANX_PROTECTION_NONE, 0 /*alpha*/, 0/*clamp*/, DISPMANX_NO_ROTATE/*transform*/);
       
     nativewindow.element = dispman_element;
