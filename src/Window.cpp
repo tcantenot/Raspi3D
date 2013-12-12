@@ -431,9 +431,9 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
