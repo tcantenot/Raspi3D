@@ -470,14 +470,15 @@ Window::Window(Context & context, char const * title,
     // EGL context attributes
     EGLint const attribList[] =
     {
-       EGL_RED_SIZE,       5,
-       EGL_GREEN_SIZE,     6,
-       EGL_BLUE_SIZE,      5,
-       EGL_ALPHA_SIZE,     (flags & WINDOW_ALPHA)   ? 8 : EGL_DONT_CARE,
-       EGL_DEPTH_SIZE,     (flags & WINDOW_DEPTH)   ? 8 : EGL_DONT_CARE,
-       EGL_STENCIL_SIZE,   (flags & WINDOW_STENCIL) ? 8 : EGL_DONT_CARE,
-       EGL_SAMPLE_BUFFERS, (flags & WINDOW_ALPHA)   ? 1 : 0,
-       EGL_NONE
+        EGL_RED_SIZE,       5,
+        EGL_GREEN_SIZE,     6,
+        EGL_BLUE_SIZE,      5,
+        EGL_ALPHA_SIZE,     (flags & WINDOW_ALPHA)   ? 8 : EGL_DONT_CARE,
+        EGL_DEPTH_SIZE,     (flags & WINDOW_DEPTH)   ? 8 : EGL_DONT_CARE,
+        EGL_STENCIL_SIZE,   (flags & WINDOW_STENCIL) ? 8 : EGL_DONT_CARE,
+        EGL_SAMPLE_BUFFERS, (flags & WINDOW_ALPHA)   ? 1 : 0,
+        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+        EGL_NONE
     };
 
     // Creates EGL context
