@@ -68,8 +68,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     src_rect.width = display_width << 16;
     src_rect.height = display_height << 16;   
 
-    DISPMANX_DISPLAY_HANDLE_T dispman_display = vc_dispmanx_display_open(0 /* LCD */);
-    DISPMANX_UPDATE_HANDLE_T dispman_update  = vc_dispmanx_update_start(0);
+    DISPMANX_DISPLAY_HANDLE_T dispman_display = vc_dispmanx_display_open(2 /* LCD */);
+    DISPMANX_UPDATE_HANDLE_T dispman_update  = vc_dispmanx_update_start(2);
          
     DISPMANX_ELEMENT_HANDLE_T dispman_element = 
         vc_dispmanx_element_add(dispman_update, dispman_display,
