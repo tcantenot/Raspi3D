@@ -234,10 +234,13 @@ void load_font(std::string const & fontPath)
 // Write text to surface
 SDL_Surface * s_text = nullptr;
 SDL_Color const s_text_color = {255, 255, 255, 255};
+SDL_Color const s_clear_color = {255, 0, 0, 255};
 SDL_Surface * s_screen = nullptr;
 
 void display_text(std::string const & text)
 {
+    static auto s_clear_surface = SDL_CreateRGBSurface( SDL_HWSURFACE, s_screen->w, s_screen->h, 32, 0, 0, 0, 0); 
+
     s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
 
     if(s_text == nullptr)
@@ -249,10 +252,12 @@ void display_text(std::string const & text)
     }
 
     assert(s_screen != nullptr);
+    assert(s_clear_surface != nullptr);
+
     // Clear the screen
-    if (SDL_FillRect(s_screen, nullptr, 0x00) != 0)//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    if(SDL_BlitSurface(s_clear_surface, nullptr, s_screen, nullptr) != 0)
     {
-        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
     }
 
     // Apply the text to the display
