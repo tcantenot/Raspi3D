@@ -34,6 +34,8 @@ void Camera::move(Input const & input)
     {
         this->orient(static_cast<float>(input.getXRel()),
             static_cast<float>(input.getYRel()));
+
+        std::cout << "Mouse moved" << std::endl;
     }
     
     if(input.isKeyPressed(SDLK_UP))

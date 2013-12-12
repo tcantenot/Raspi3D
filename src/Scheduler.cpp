@@ -42,6 +42,11 @@ void Scheduler::SetScheduler(pid_t pid, SchedulerType sched, int priority)
 {
     static struct sched_param param;
 
+    if(sched == SchedulerType::Idle || sched== SchedulerType::Normal)
+    {
+        priority = 0;
+    }
+
     param.sched_priority = priority;
 
     if(sched_setscheduler(pid, sched, &param) != 0)
