@@ -79,7 +79,7 @@ void TestApp::run()
         1.f, 100.f);
 
     camera.position(glm::vec3(20, 20, 20));
-    camera.target(glm::vec3(0, 0, 0));
+    camera.target(glm::vec3(10, 10, 10));
     camera.up(glm::vec3(0, 1, 0));
 
     Input input;
