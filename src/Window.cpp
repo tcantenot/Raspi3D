@@ -462,7 +462,6 @@ Window::Window(Context & context, char const * title,
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
     {
-        //throw EGLException("Cannot create window");
         std::cerr << "Failed to create window" << std::endl;
     }
 
@@ -483,7 +482,6 @@ Window::Window(Context & context, char const * title,
     // Creates EGL context
     if(create_egl_context(context, attribList) == EGL_FALSE)
     {
-        //throw EGLException("Cannot create window");
         std::cerr << "Failed to create egl context" << std::endl;
     }
 }
