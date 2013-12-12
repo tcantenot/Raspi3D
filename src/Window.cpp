@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-#define LINUX_SDL_TEST
+//#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -183,7 +183,6 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
 GLboolean user_interrupt(RPi::Context & context)
 {
     GLboolean userinterrupt = EGL_FALSE;
-    (void) context;
 
     //#ifndef LINUX_SDL_TEST
     XEvent xev;
@@ -212,11 +211,11 @@ GLboolean user_interrupt(RPi::Context & context)
                     userinterrupt = EGL_TRUE;
             }
         }
-        if(xev.type == MotionNotify)
-        {
-            auto const & mev = xev.xmotion;
-            std::cout << "Mouse moved : " << mev.x << " | " << mev.y << " || " << mev.x_root << " | " << mev.y_root << std::endl;
-        }
+        //if(xev.type == MotionNotify)
+        //{
+            //auto const & mev = xev.xmotion;
+            //std::cout << "Mouse moved : " << mev.x << " | " << mev.y << " || " << mev.x_root << " | " << mev.y_root << std::endl;
+        //}
         if(xev.type == DestroyNotify)
             userinterrupt = EGL_TRUE;
     }
@@ -301,8 +300,6 @@ void display_text(std::string const &)
 }
 
 #endif
-
-
 
 
 
@@ -415,6 +412,8 @@ Window::Window(Context & context, char const * title,
     int width, int height, WindowFlags flags):
     m_width(width), m_height(height), m_context(context)
 {
+    context.width  = m_width;
+    context.height = m_height;
 
     #if defined __arm__ || defined LINUX_SDL_TEST
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -432,9 +431,9 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -549,8 +548,6 @@ void Window::grabMousePointer(bool grab) const
     //else
         //SDL_SetRelativeMouseMode(SDL_FALSE);
 }
-
-
 
 
 void Window::init() const
