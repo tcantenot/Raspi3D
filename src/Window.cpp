@@ -52,8 +52,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
       return EGL_FALSE;
     }
 
-    //auto display_width  = context.width;
-    //auto display_height = context.height;
+    display_width  = context.width;
+    display_height = context.height;
 
     VC_RECT_T dst_rect;
     VC_RECT_T src_rect;
