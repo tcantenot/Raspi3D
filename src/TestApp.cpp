@@ -54,7 +54,7 @@ void TestApp::run()
 
     std::vector<Cube> cubes;
 
-    for(int i = 0; i < 5; ++i)
+    for(int i = 0; i < 150; ++i)
     {
         cubes.emplace_back(i);                        
         auto & c = cubes[i];
@@ -153,7 +153,7 @@ void TestApp::run()
 
         for(auto & c : cubes)
         {
-            c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
+            //c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
             c.render(*m_window.getContext().program, projection, modelview);
         }
 
