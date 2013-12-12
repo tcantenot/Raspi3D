@@ -79,6 +79,10 @@ void TestApp::run()
     projection = glm::perspective(70.0, (double) m_window.getWidth() / m_window.getHeight(), 1.0, 100.0);
     modelview  = glm::mat4(1.0);
 
+    static float const PI2 = 2 * M_PI;
+    float timeWave = -PI2;
+
+
     while(!m_window.userInterrupt() && !quitting)
     {
         // Reset timer
@@ -108,10 +112,19 @@ void TestApp::run()
 
         projection = camera.projection();
 ;
+
         if(timeFromStart - timeFromStartTmp > 100.f)
         {
+            timeWave += M_PI / 16;
+
+            if(timeWave > PI2)
+            {
+                timeWave = -PI2;
+            }
+
             timeFromStartTmp = timeFromStart;
-            m_window.getContext().program->sendFloat("time", timeFromStart);
+
+            m_window.getContext().program->sendFloat("time", timeWave);
         }
 
         // Render the cube
