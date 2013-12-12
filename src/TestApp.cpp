@@ -100,7 +100,7 @@ void TestApp::run()
         }
     
         // Clear the screen
-        glClear(GL_COLOR_BUFFER_BIT);
+        m_window.clear();
 
         modelview = camera.lookAt();
 
@@ -120,9 +120,6 @@ void TestApp::run()
         //terrain2.render(*m_window.getContext().program, projection, modelview);
 
 
-        // Refresh the window
-        m_window.display();
-
         // Get FPS
         totalTime += deltaTime;
         ++nbFrames;
@@ -141,6 +138,9 @@ void TestApp::run()
             totalTime -= 1000.0f;
             nbFrames = 0;
         }
+
+        // Refresh the window
+        m_window.display();
     }
 
     std::cout << "END OF LOOP" << std::endl;
