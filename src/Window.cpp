@@ -17,6 +17,8 @@
     #include <X11/Xutil.h>
 #endif
 
+//#define LINUX_TEST
+
 #ifndef __arm__
 // X11 related local variables
 static Display * x_display = nullptr;
@@ -25,7 +27,7 @@ static Display * x_display = nullptr;
 namespace {
 
 
-#ifdef __arm__
+#ifdef __arm__ || LINUX_TEST
 ///
 //  create_window() - RaspberryPi, direct surface(No X, Xlib)
 //
@@ -379,7 +381,7 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    #ifdef __arm__
+    #ifdef __arm__ || LINUX_TEST
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         std::cerr << "SDL_Init failed" << std::endl;

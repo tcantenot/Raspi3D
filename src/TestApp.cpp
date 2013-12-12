@@ -2,6 +2,9 @@
 #include <chrono>
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -14,6 +17,7 @@
 #include <PerspectiveCamera.hpp>
 #include <Input.hpp>
 #include <Terrain.hpp>
+#include <Scheduler.hpp>
 
 
 namespace RPi {
@@ -118,7 +122,6 @@ void TestApp::run()
 
         // Refresh the window
         m_window.display();
-        m_window.displayText("Hello world !");
 
         // Get FPS
         totalTime += deltaTime;
@@ -126,10 +129,16 @@ void TestApp::run()
 
         if(totalTime > 1000.0f)
         {
-            std::cout << nbFrames << " frames rendered in " << totalTime 
+            std::ostringstream fpsText;
+            fpsText << nbFrames << " frames rendered in " << totalTime 
                       << " ms -> FPS = " 
-                      << (static_cast<float>(nbFrames) / (totalTime / 1000.f))
-                      << std::endl;
+                      << (static_cast<float>(nbFrames) / (totalTime / 1000.f));
+            
+            std::cout << fpsText.str() << std::endl;
+
+
+
+            m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
 
             totalTime -= 1000.0f;
             nbFrames = 0;
