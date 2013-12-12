@@ -50,7 +50,7 @@ Terrain::Terrain(Size w, Size h):
 
     bool p = false;
 
-    float step = 0.05f;
+    float step = 0.1f;
 
     for(float i = 0.f; i < w; i += step)
     {
@@ -61,25 +61,10 @@ Terrain::Terrain(Size w, Size h):
             auto idxJ = p ? j : h - j;
             auto nextJ = idxJ + (p ? step : -step);
 
-            vertices.push_back(i)    ; vertices.push_back(noise(i,     idxJ) ); vertices.push_back(idxJ) ;
-            vertices.push_back(i)    ; vertices.push_back(noise(i,     nextJ)); vertices.push_back(nextJ);
+            vertices.push_back(i)     ; vertices.push_back(noise(i,      idxJ) ); vertices.push_back(idxJ) ;
+            vertices.push_back(i)     ; vertices.push_back(noise(i,      nextJ)); vertices.push_back(nextJ);
             vertices.push_back(i+step); vertices.push_back(noise(i+step, idxJ) ); vertices.push_back(idxJ) ;
             vertices.push_back(i+step); vertices.push_back(noise(i+step, nextJ)); vertices.push_back(nextJ);
-            
-            //for(Size k = 0; k < 10; k += 10)
-            //{
-                //auto idxJ  = j + k * 0.1f;
-                //auto nextJ = j + k * 0.1f + 1.f;
-                //auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f;
-                //auto nextJ = p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
-
-                //std::cout << idxJ << std::endl;
-
-                //vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ)  ); vertices.push_back(idxJ)  ;
-                //vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   nextJ)); vertices.push_back(nextJ);
-                //vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, idxJ)  ); vertices.push_back(idxJ)  ;
-                //vertices.push_back(i+k*0.1f+1); vertices.push_back(noise(i+k*0.1f+1, nextJ)); vertices.push_back(nextJ);
-            //}
         }
     }
 
