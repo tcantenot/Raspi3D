@@ -50,7 +50,7 @@ Terrain::Terrain(Size w, Size h):
 
     bool p = false;
 
-    float step = 1f;
+    float step = 1.f;
 
     for(float i = 0; i < w; i += step)
     {
