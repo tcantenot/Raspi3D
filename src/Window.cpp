@@ -433,7 +433,7 @@ Window::Window(Context & context, char const * title,
 
     //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE);// | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -531,7 +531,6 @@ void Window::showMousePointer(bool show) const
     else
         SDL_ShowCursor(SDL_DISABLE);
 }
-
 
 void Window::grabMousePointer(bool grab) const
 {
