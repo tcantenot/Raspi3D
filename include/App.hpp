@@ -9,7 +9,7 @@ namespace RPi {
     class App
     {
         public:
-            App(Window & window, int argc, char const ** argv);
+            App(Window & window, int argc, char ** argv);
             virtual ~App();
 
             App() = delete;

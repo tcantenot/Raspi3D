@@ -5,7 +5,7 @@
 
 namespace RPi {
     
-App::App(Window & window, int, char const **):
+App::App(Window & window, int, char **):
     m_window(window)
 {
 

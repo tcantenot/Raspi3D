@@ -8,7 +8,7 @@ namespace RPi {
 class TestApp : public App
 {
     public:
-        TestApp(Window & window, int argc, char const ** argv);
+        TestApp(Window & window, int argc, char ** argv);
         virtual ~TestApp();
 
         virtual void run() override;

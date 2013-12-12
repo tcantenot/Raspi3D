@@ -35,7 +35,7 @@ namespace {
 
 namespace RPi {
 
-TestApp::TestApp(Window & window, int argc, char const ** argv): App(window, argc, argv)
+TestApp::TestApp(Window & window, int argc, char ** argv): App(window, argc, argv)
 {
 
 }

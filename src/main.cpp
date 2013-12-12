@@ -12,6 +12,7 @@
 #include <GLSLProgram.hpp>
 #include <OpenGL.hpp>
 #include <Window.hpp>
+#include <Utils.hpp>
 
 #include <PerlinNoise.hpp>
 #include <Scheduler.hpp>
@@ -20,6 +21,7 @@
 #include <unistd.h>
 
 using namespace RPi;
+
 
 void Draw(Context & context);
 
@@ -83,8 +85,13 @@ void Draw(Context & context);
 
         //return 0;
 /*}*/
-int main(int argc, char const ** argv)
+
+void parse_args(int argc, char ** argv);
+
+int main(int argc, char ** argv)
 {
+    //parse_args(argc, argv);
+
     //Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
 
     std::cout << Scheduler::GetSchedulerName(getpid()) << std::endl;
@@ -123,6 +130,47 @@ int main(int argc, char const ** argv)
     std::cout << "THIS IS THE END" << std::endl;
 
     return 0;
+}
+
+void parse_args(int argc, char ** argv)
+{
+    int c;
+    std::string scheduler = "default";
+    int priority = -1;
+
+    while((c = getopt(argc, argv, "s:p:")) != -1)
+    {
+        switch(c)
+        {
+            case 's':
+                scheduler = optarg;
+                break;
+            case 'p':
+                priority = Utils::Number<decltype(priority)>(optarg);
+                break;
+            case '?':
+                if(optopt == 's')
+                    fprintf (stderr, "Option -%c requires a scheduler name.\n", optopt);
+                else if(optopt == 'p')
+                    fprintf (stderr, "Option -%c requires a priority.\n", optopt);
+                else if(isprint(optopt))
+                    fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+                else
+                    fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+                exit(1);
+            default:
+                exit(2);
+        }
+    }
+
+    try {
+        Scheduler::SetScheduler(getpid(), scheduler, priority);
+    } catch(std::exception const & e) {
+        std::cerr << "Error : " << e.what() << std::endl;
+    }
+
+    std::cout << "Scheduler : " << scheduler << std::endl;
+    std::cout << "Priority  : " << priority << std::endl;
 }
 
 

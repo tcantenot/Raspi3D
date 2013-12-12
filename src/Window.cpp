@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-#define LINUX_SDL_TEST
+//#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -181,9 +181,12 @@ EGLBoolean create_window(RPi::Context & context, const char *title)
 //
 GLboolean user_interrupt(RPi::Context & context)
 {
+    GLboolean userinterrupt = EGL_FALSE;
+    (void) context;
+
+    //#ifndef LINUX_SDL_TEST
     XEvent xev;
     KeySym key;
-    GLboolean userinterrupt = EGL_FALSE;
     char text;
 
     //Pump all messages from X server. Keypresses are directed to keyfunc(if defined)
@@ -208,9 +211,16 @@ GLboolean user_interrupt(RPi::Context & context)
                     userinterrupt = EGL_TRUE;
             }
         }
+        if(xev.type == MotionNotify)
+        {
+            auto const & mev = xev.xmotion;
+            std::cout << "Mouse moved : " << mev.x << " | " << mev.y << " || " << mev.x_root << " | " << mev.y_root << std::endl;
+        }
         if(xev.type == DestroyNotify)
             userinterrupt = EGL_TRUE;
     }
+    //#endif
+
     return userinterrupt;
 }
 #endif
@@ -446,7 +456,7 @@ Window::Window(Context & context, char const * title,
     }
     #endif
 
-    load_font("res/fonts/FreeSans.ttf");
+    //load_font("res/fonts/FreeSans.ttf");
 
     // Creates the window
     if(create_window(context, title) == EGL_FALSE)
