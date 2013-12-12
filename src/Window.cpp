@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-//#define LINUX_SDL_TEST
+#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -433,7 +433,7 @@ Window::Window(Context & context, char const * title,
 
     //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_HWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -510,9 +510,6 @@ int Window::getHeight() const
 
 void Window::clear() const
 {
-    #if defined __arm__ || defined LINUX_SDL_TEST
-    #endif
-
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -551,7 +548,7 @@ void Window::grabMousePointer(bool grab) const
 
 void Window::init() const
 {
-    glClearColor(1.0, 0.0, 0.0, 0.0);
+    glClearColor(1.0, 0.0, 0.0, 1.0);
     //glEnable(GL_DEPTH_TEST);
 }
 
