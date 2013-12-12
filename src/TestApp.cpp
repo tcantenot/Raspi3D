@@ -17,8 +17,21 @@
 #include <PerspectiveCamera.hpp>
 #include <Input.hpp>
 #include <Terrain.hpp>
-#include <Scheduler.hpp>
+#include <Scheduler.hpp> 
 
+#include <cstdlib>
+#include <ctime>
+
+namespace {
+
+    int random(int a, int b){
+        return std::rand() % (b - a) + a;
+    }
+
+    float frandom(float a, float b){
+        return (std::rand() / (float)RAND_MAX) * (b - a) + a;
+    }
+}
 
 namespace RPi {
 
@@ -34,6 +47,8 @@ TestApp::~TestApp()
 
 void TestApp::run()
 {
+    std::srand(time(0));
+
     float timeFromStart = 0.f;
     float timeFromStartTmp = 0.f;
     float totalTime = 0.f;
@@ -82,7 +97,7 @@ void TestApp::run()
     static float const PI2 = 2 * M_PI;
     static float const timeWaveStep = M_PI / 16;
     float timeWave = -PI2;
-
+    float random = 1.f;
 
     while(!m_window.userInterrupt() && !quitting)
     {
@@ -119,13 +134,17 @@ void TestApp::run()
             if(timeWave > PI2)
             {
                 timeWave = -PI2;
+                random = frandom(1.f, 2.f);
             }
 
             timeWave += timeWaveStep;
 
+            std::cout << timeWave << std::endl;
+
             timeFromStartTmp = timeFromStart;
 
             m_window.getContext().program->sendFloat("time", timeWave);
+            m_window.getContext().program->sendFloat("random", random);
         }
 
         // Render the cube

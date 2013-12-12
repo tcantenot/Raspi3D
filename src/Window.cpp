@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-#define LINUX_SDL_TEST
+//#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -409,8 +409,8 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    //s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(m_width, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
