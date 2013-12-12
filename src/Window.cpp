@@ -17,7 +17,7 @@
     #include <X11/Xutil.h>
 #endif
 
-//#define LINUX_SDL_TEST
+#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -256,7 +256,7 @@ void display_text(std::string const & text)
         std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
     }
 
-    SDL_Flip(s_screen);
+    //SDL_Flip(s_screen);
 }
 
 #else
@@ -485,7 +485,7 @@ void Window::clear() const
 
 void Window::display() const
 {
-    //eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
+    eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
 }
 
 void Window::displayText(std::string const & text) const
