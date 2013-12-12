@@ -523,10 +523,9 @@ void Window::display() const
 
 void Window::displayText(std::string const & text) const
 {
-    // Ugly
-    glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_DEPTH_TEST);
     display_text(text);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -552,8 +551,8 @@ void Window::grabMousePointer(bool grab) const
 
 void Window::init() const
 {
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    glEnable(GL_DEPTH_TEST);
+    glClearColor(1.0, 0.0, 0.0, 0.0);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()

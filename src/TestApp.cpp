@@ -24,10 +24,6 @@
 
 namespace {
 
-    int random(int a, int b){
-        return std::rand() % (b - a) + a;
-    }
-
     float frandom(float a, float b){
         return (std::rand() / (float)RAND_MAX) * (b - a) + a;
     }
@@ -59,12 +55,10 @@ void TestApp::run()
 
     std::vector<Cube> cubes;
 
-    for(int i = 0; i < 150; ++i)
+    for(int i = 0; i < 0; ++i)
     {
         cubes.emplace_back(i);                        
     }
-
-    //std::cout << "Cube size : "
 
     Terrain terrain(50, 50);
 
