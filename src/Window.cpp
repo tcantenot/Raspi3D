@@ -242,7 +242,7 @@ void display_text(std::string const & text)
 {
     if(s_clear_surface == nullptr)
     {
-        s_clear_surface = SDL_CreateRGBSurface( SDL_HWSURFACE, s_screen->w, s_screen->h, 32, 0, 0, 0, 0); 
+        s_clear_surface = SDL_CreateRGBSurface( SDL_HWSURFACE, s_screen->w, s_screen->h * 0.2, 32, 0, 0, 0, 0); 
     }
 
     //s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
