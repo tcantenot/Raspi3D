@@ -249,6 +249,11 @@ void display_text(std::string const & text)
     }
 
     assert(s_screen != nullptr);
+    // Clear the screen
+    if (SDL_FillRect(s_screen, nullptr, 0x00) != 0)//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    {
+        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+    }
 
     // Apply the text to the display
     if (SDL_BlitSurface(s_text, nullptr, s_screen, nullptr) != 0)
@@ -256,7 +261,7 @@ void display_text(std::string const & text)
         std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
     }
 
-    //SDL_Flip(s_screen);
+    SDL_Flip(s_screen);
 }
 
 #else
@@ -473,11 +478,6 @@ int Window::getHeight() const
 void Window::clear() const
 {
     #if defined __arm__ || defined LINUX_SDL_TEST
-    // Clear the screen
-    if (SDL_FillRect(s_screen, nullptr, 0x00) != 0)//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
-    {
-        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
-    }
     #endif
 
     glClear(GL_COLOR_BUFFER_BIT);
