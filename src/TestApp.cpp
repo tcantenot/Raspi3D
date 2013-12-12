@@ -134,7 +134,7 @@ void TestApp::run()
             if(timeWave > PI2)
             {
                 timeWave = -PI2;
-                random = frandom(1.f, 3.f);
+                random = frandom(1.f, 2.f);
                 std::cout << random << std::endl;
             }
 
