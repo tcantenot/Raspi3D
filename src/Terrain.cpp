@@ -50,21 +50,21 @@ Terrain::Terrain(Size w, Size h):
 
     bool p = false;
 
-    float step = 0.3f;
+    float step = 0.2f;
 
-    for(float i = 0; i < w; i += step)
+    for(float i = 0.f; i < w; i += step)
     {
         p = !p;
 
-        for(float j = 0; j < h; j += step)
+        for(float j = 0.f; j < h; j += step)
         {
             auto idxJ = p ? j : h - j;
-            auto nextJ = idxJ + (p ? 1.f : -1.f);
+            auto nextJ = idxJ + (p ? step : -step);
 
             vertices.push_back(i)    ; vertices.push_back(noise(i,     idxJ) ); vertices.push_back(idxJ) ;
             vertices.push_back(i)    ; vertices.push_back(noise(i,     nextJ)); vertices.push_back(nextJ);
-            vertices.push_back(i+1.f); vertices.push_back(noise(i+1.f, idxJ) ); vertices.push_back(idxJ) ;
-            vertices.push_back(i+1.f); vertices.push_back(noise(i+1.f, nextJ)); vertices.push_back(nextJ);
+            vertices.push_back(i+step); vertices.push_back(noise(i+step, idxJ) ); vertices.push_back(idxJ) ;
+            vertices.push_back(i+step); vertices.push_back(noise(i+step, nextJ)); vertices.push_back(nextJ);
             
             //for(Size k = 0; k < 10; k += 10)
             //{
