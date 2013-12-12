@@ -142,7 +142,7 @@ void TestApp::run()
 
             if(std::fabs(timeWave) < std::numeric_limits<float>::epsilon())
             {
-                timeWave = timeWaveStep;
+                timeWave = 0.f;
             }
 
             //std::cout << timeWave << std::endl;
