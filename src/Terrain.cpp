@@ -60,8 +60,11 @@ Terrain::Terrain(Size w, Size h):
         {
             for(Size k = 0; k < 10; k += 10)
             {
-                auto idxJ  = j + k * 0.1f;//p ? j + k * 0.1f : h - j - k * 0.1f ;
-                auto nextJ = j + k * 0.1f + 1.f;//p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
+                auto idxJ  = j + k * 0.1f;
+                auto nextJ = j + k * 0.1f + 1.f;
+                //auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f;
+                //auto nextJ = p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
+
                 
                 std::cout << idxJ << std::endl;
 

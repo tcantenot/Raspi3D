@@ -80,6 +80,7 @@ void TestApp::run()
     modelview  = glm::mat4(1.0);
 
     static float const PI2 = 2 * M_PI;
+    static float const timeWaveStep = M_PI / 16;
     float timeWave = -PI2;
 
 
@@ -115,12 +116,12 @@ void TestApp::run()
 
         if(timeFromStart - timeFromStartTmp > 100.f)
         {
-            timeWave += M_PI / 16;
-
             if(timeWave > PI2)
             {
                 timeWave = -PI2;
             }
+
+            timeWave += timeWaveStep;
 
             timeFromStartTmp = timeFromStart;
 
