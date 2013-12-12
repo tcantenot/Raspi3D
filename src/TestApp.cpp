@@ -134,10 +134,16 @@ void TestApp::run()
             if(timeWave > PI2)
             {
                 timeWave = -PI2;
-                random = frandom(1.f, 2.f);
+                random = frandom(1.f, 5.f);
+                std::cout << random << std::endl;
             }
 
             timeWave += timeWaveStep;
+
+            if(std::fabs(timeWave) < std::numeric_limits<float>::epsilon())
+            {
+                timeWave = 0.f;
+            }
 
             //std::cout << timeWave << std::endl;
 
