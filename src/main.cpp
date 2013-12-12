@@ -25,67 +25,6 @@ using namespace RPi;
 
 void Draw(Context & context);
 
-/*int main(int argc, char*argv[])*/
-//{
-        //// initing the SDL stuff
-        //SDL_Surface *screen;
-
-    //if((SDL_Init(SDL_INIT_VIDEO)==-1)) { 
-        //printf("Could not initialize SDL: %s.\n", SDL_GetError());
-        //exit(-1);
-    //}
-        //atexit(SDL_Quit);
-
-    //SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
-    //SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
-    //SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-        //SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8 );
-    //SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-    //SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-
-    //screen = SDL_SetVideoMode(800, 800, 8, SDL_HWSURFACE);
-    //if ( screen == NULL ) {
-        //fprintf(stderr, "Couldn't set video mode: %s\n", SDL_GetError());
-        //exit(1);
-    //}
-
-    ////auto context = SDL_GL_CreateContext(screen);
-
-    ////if(context == nullptr)
-    ////{
-        ////std::cerr << SDL_GetError() << std::endl;
-        ////SDL_Quit();
-        ////return false;
-    ////}
-
-    //GLSLProgram program;
-    //program.loadShaderFromFile(Enums::ShaderType_VertexShader, "./shaders/shader.vs");
-    //program.loadShaderFromFile(Enums::ShaderType_FragmentShader, "./shaders/shader.fs");
-    //std::cout << program.getLog() << std::endl;
-    //program.link();
-
-        ////initOGL();
-        ////texture1 = LoadTexture("plasma2.bmp");        
-
-        //while(1)
-        //{
-                //SDL_Event event;
-                //while (SDL_PollEvent(&event)) {
-                        //switch(event.type){
-                                //case SDL_QUIT:
-                                        //SDL_Quit();
-                                        //exit(0);
-                                        //break;
-                        //}
-                //}
-                
-                ////render();
-                //SDL_GL_SwapBuffers();
-        //}
-
-        //return 0;
-/*}*/
-
 static struct Info
 {
     std::string sched = "SCHED_NORMAL";
@@ -157,7 +96,7 @@ void parse_args(int argc, char ** argv)
 {
     int c;
 
-    while((c = getopt(argc, argv, "s:p:")) != -1)
+    while((c = getopt(argc, argv, "s:p:x:y:w:h:")) != -1)
     {
         switch(c)
         {
