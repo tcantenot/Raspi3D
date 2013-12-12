@@ -472,20 +472,28 @@ int Window::getHeight() const
 
 void Window::clear() const
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    #if defined __arm__ || defined LINUX_SDL_TEST
+    // Clear the screen
+    if (SDL_FillRect(s_screen, nullptr, 0x00);//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    {
+        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+    }
+    #endif
+
+    //glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Window::display() const
 {
-    eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
+    //eglSwapBuffers(m_context.eglDisplay, m_context.eglSurface);
 }
 
 void Window::displayText(std::string const & text) const
 {
     // Ugly
-    glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_DEPTH_TEST);
     display_text(text);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -513,8 +521,8 @@ void Window::grabMousePointer(bool grab) const
 
 void Window::init() const
 {
-    glClearColor(0.0, 0.0, 0.0, 0.0);
-    glEnable(GL_DEPTH_TEST);
+    //glClearColor(0.0, 0.0, 0.0, 0.0);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()
