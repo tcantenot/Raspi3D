@@ -65,8 +65,7 @@ Terrain::Terrain(Size w, Size h):
                 //auto idxJ = p ? j + k * 0.1f : h - j - k * 0.1f;
                 //auto nextJ = p ? j + k * 0.1f + 1.f : h - j - k * 0.1f - 1.f;
 
-                
-                std::cout << idxJ << std::endl;
+                //std::cout << idxJ << std::endl;
 
                 vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   idxJ)  ); vertices.push_back(idxJ)  ;
                 vertices.push_back(i+k*0.1f)  ; vertices.push_back(noise(i+k*0.1f,   nextJ)); vertices.push_back(nextJ);
