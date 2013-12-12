@@ -99,7 +99,7 @@ GLboolean user_interrupt(RPi::Context &)
 
 // Load a font
 //std::shared_ptr<TTF_Font> s_font = nullptr;
-__thread TTF_Font * s_font = nullptr;
+TTF_Font * s_font = nullptr;
 
 void load_font(std::string const & fontPath)
 {
@@ -114,9 +114,9 @@ void load_font(std::string const & fontPath)
 }
 
 // Write text to surface
-__thread SDL_Surface * s_text = nullptr;
-__thread SDL_Color const s_text_color = {255, 255, 255, 255};
-__thread SDL_Surface * s_screen = nullptr;
+SDL_Surface * s_text = nullptr;
+SDL_Color const s_text_color = {255, 255, 255, 255};
+SDL_Surface * s_screen = nullptr;
 
 void display_text(std::string const & text)
 {
@@ -385,7 +385,7 @@ Window::Window(Context & context, char const * title,
         std::cerr << "SDL_Init failed" << std::endl;
     }
 
-    s_screen.reset(SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN));
+    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -407,7 +407,6 @@ Window::Window(Context & context, char const * title,
         SDL_Quit();
         exit(1);
     }
-
     #endif
 
     load_font("res/fonts/FreeSans.ttf");
