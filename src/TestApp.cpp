@@ -59,7 +59,7 @@ void TestApp::run()
         cubes.emplace_back(i);                        
     }
 
-    Terrain terrain(50, 50);
+    Terrain terrain(100, 100);
 
     //Terrain terrain2(500, 500);
 
