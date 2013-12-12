@@ -49,6 +49,10 @@ int main(int argc, char ** argv)
 
     std::cout << "Scheduler : " << s_info.sched << std::endl;
     std::cout << "Priority  : " << s_info.priority << std::endl;
+    std::cout << "X  : " << s_info.x << std::endl;
+    std::cout << "Y  : " << s_info.y << std::endl;
+    std::cout << "W  : " << s_info.w << std::endl;
+    std::cout << "H  : " << s_info.h << std::endl;
 
     //Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
 

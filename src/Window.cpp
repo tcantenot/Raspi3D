@@ -63,8 +63,8 @@ EGLBoolean create_window(RPi::Context & context, const char *)
     dst_rect.width = display_width;
     dst_rect.height = display_height;
       
-    src_rect.x = 0;
-    src_rect.y = 0;
+    src_rect.x = context.x;
+    src_rect.y = context.y;
     src_rect.width = display_width << 16;
     src_rect.height = display_height << 16;   
 

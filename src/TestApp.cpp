@@ -26,6 +26,11 @@ namespace {
     float frandom(float a, float b){
         return (std::rand() / static_cast<float>(RAND_MAX)) * (b - a) + a;
     }
+
+    void doLag()
+    {
+        for(auto i = 0; i < 10000000; ++i);
+    }
 }
 
 namespace RPi {
@@ -115,6 +120,11 @@ void TestApp::run()
             std::cout << "Escape key pressed" << std::endl;
             break;
         }
+
+        if(input.isKeyPressed(SDLK_l))
+        {
+            doLag();
+        }
     
         // Clear the screen
         m_window.clear();
@@ -150,8 +160,6 @@ void TestApp::run()
 
         // Render the cube
         cube.render(*m_window.getContext().program, projection, modelview);
-
-        for(auto i = 0; i < 100000; ++i);
 
         for(auto & c : cubes)
         {
