@@ -256,7 +256,7 @@ void display_text(std::string const & text)
         std::cerr << "SDL_BlitSurface() Failed: " << SDL_GetError() << std::endl;
     }
 
-    //SDL_Flip(s_screen);
+    SDL_Flip(s_screen);
 }
 
 #else
