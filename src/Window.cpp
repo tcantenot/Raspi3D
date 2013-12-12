@@ -338,8 +338,7 @@ EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList
     // Defines the current rendering API
     if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
     {
-        std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE;
-    }
+        std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE; }
 
     std::cout << "Bind API OK" << std::endl;
 
@@ -496,9 +495,9 @@ void Window::display() const
 void Window::displayText(std::string const & text) const
 {
     // Ugly
-    //glDisable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
     display_text(text);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -526,8 +525,8 @@ void Window::grabMousePointer(bool grab) const
 
 void Window::init() const
 {
-    //glClearColor(0.0, 0.0, 0.0, 0.0);
-    //glEnable(GL_DEPTH_TEST);
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()

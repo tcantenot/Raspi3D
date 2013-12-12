@@ -119,6 +119,8 @@ void TestApp::run()
         //glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
         //terrain2.render(*m_window.getContext().program, projection, modelview);
 
+        // Refresh the window
+        m_window.display();
 
         // Get FPS
         totalTime += deltaTime;
@@ -138,9 +140,6 @@ void TestApp::run()
             totalTime -= 1000.0f;
             nbFrames = 0;
         }
-
-        // Refresh the window
-        m_window.display();
     }
 
     std::cout << "END OF LOOP" << std::endl;
