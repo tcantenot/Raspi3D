@@ -472,14 +472,6 @@ int Window::getHeight() const
 
 void Window::clear() const
 {
-    #if defined __arm__ || defined LINUX_SDL_TEST
-    // Clear the screen
-    if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
-    {
-        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
-    }
-    #endif
-
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
