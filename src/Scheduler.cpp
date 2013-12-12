@@ -88,6 +88,19 @@ std::string Scheduler::GetSchedulerName(pid_t pid) throw(std::runtime_error)
     return s_schedNamesFromType[Scheduler::GetScheduler(pid)];
 }
 
+int Scheduler::GetPriority(pid_t pid) throw(std::runtime_error)
+{
+    sched_param param;
+ 
+    if(sched_getparam(pid, &param) < 0)
+    {
+        perror("Scheduler::GetPriority");
+        throw std::runtime_error("Failed to get priority");
+    }
+
+    return param.sched_priority;
+}
+
 SchedulerType Scheduler::SchedulerTypeFromName(std::string const & name)
 {
     return s_schedTypesFromName[name];

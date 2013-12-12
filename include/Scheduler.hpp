@@ -34,6 +34,8 @@ namespace RPi {
 
             static std::string GetSchedulerName(pid_t pid) throw(std::runtime_error);
 
+            static int GetPriority(pid_t pid) throw(std::runtime_error); 
+
             static SchedulerType SchedulerTypeFromName(std::string const & name);
 
             static std::string SchedulerNameFromType(SchedulerType type);

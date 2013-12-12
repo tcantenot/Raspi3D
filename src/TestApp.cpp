@@ -78,7 +78,7 @@ void TestApp::run()
         static_cast<float>(m_window.getWidth()) / static_cast<float>(m_window.getHeight()),
         1.f, 100.f);
 
-    camera.position(glm::vec3(20, 20, 20));
+    camera.position(glm::vec3(15, 15, 15));
     camera.target(glm::vec3(10, 10, 10));
     camera.up(glm::vec3(0, 1, 0));
 
@@ -165,13 +165,13 @@ void TestApp::run()
         }
 
         // Render the cube
-        cube.render(*m_window.getContext().program, projection, modelview);
+        //cube.render(*m_window.getContext().program, projection, modelview);
 
-        for(auto & c : cubes)
-        {
-            c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
+        //for(auto & c : cubes)
+        //{
+            //c.rotate(frandom(0.f, 180.f), glm::vec3(1.0, 1.0, 0));
             //c.render(*m_window.getContext().program, projection, modelview);
-        }
+        //}
 
         //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
         terrain.render(*m_window.getContext().program, projection, modelview);
@@ -188,14 +188,24 @@ void TestApp::run()
 
         if(totalTime > 1000.0f)
         {
+            auto fps = (static_cast<float>(nbFrames) / (totalTime / 1000.f));
             std::ostringstream fpsText;
             fpsText << nbFrames << " frames rendered in " << totalTime 
                       << " ms -> FPS = " 
-                      << (static_cast<float>(nbFrames) / (totalTime / 1000.f));
-            
+                      << fps;
+
             std::cout << fpsText.str() << std::endl;
 
-            m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
+            std::cout << "Pos : (" << camera.position().x << ", " << camera.position().y << ", " << camera.position().z << ")" << std::endl;
+            std::cout << "Target : (" << camera.target().x << ", " << camera.target().y << ", " << camera.target().z << ")" << std::endl;
+            
+            fpsText.clear();
+
+            fpsText << "Sched : " << Scheduler::GetSchedulerName(getpid())
+                    << "; Priority : " << Scheduler::GetPriority(getpid())
+                    << " => " << fps << " FPS";
+
+            m_window.displayText(fpsText.str());
 
             totalTime -= 1000.0f;
             nbFrames = 0;
