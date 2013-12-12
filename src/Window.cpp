@@ -212,6 +212,7 @@ GLboolean user_interrupt(RPi::Context & context)
 }
 #endif
 
+
 #if defined __arm__ || defined LINUX_SDL_TEST
 
 // Load a font
@@ -276,106 +277,107 @@ void display_text(std::string const &)
 
 
 
-    EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
+EGLBoolean create_egl_context(RPi::Context & rpiContext, EGLint const attribList[])
+{
+    // Obtains the EGL display connection for the given native display 
+    EGLDisplay display;
+
+    //#ifdef __arm__
+    display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    //#else
+    //display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
+    //#endif
+    
+    std::cout << "Get display OK" << std::endl;
+
+    if(display == EGL_NO_DISPLAY)
     {
-        // Obtains the EGL display connection for the given native display 
-        EGLDisplay display;
-
-        //#ifdef __arm__
-        display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-        //#else
-        //display = eglGetDisplay(static_cast<EGLNativeDisplayType>(x_display));
-        //#endif
-        
-        std::cout << "Get display OK" << std::endl;
-
-        if(display == EGL_NO_DISPLAY)
-        {
-            std::cerr << "Failed to get display" << std::endl;
-            return EGL_FALSE;
-        }
-
-        // Initialize EGL
-        if(eglInitialize(display, nullptr, nullptr) == EGL_FALSE)
-        {
-            std::cerr << "Failed to initialize EGL" << std::endl;
-            return EGL_FALSE;
-        }
-
-        std::cout << "Initialize display OK" << std::endl;
-
-        // Get configs
-        EGLint nbConfigs;
-        if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
-        {
-            std::cerr << "Failed to get configs" << std::endl;
-            return EGL_FALSE;
-        }
-
-        std::cout << "Get config OK" << std::endl;
-
-        // Choose config
-         EGLConfig config;
-        if(eglChooseConfig(display, attribList, &config, 1, &nbConfigs) == EGL_FALSE)
-        {
-            std::cerr << "Failed to choose configs" << std::endl;
-            return EGL_FALSE;
-        }
-
-        std::cout << "Choose config OK" << std::endl;
-
-        // Defines the current rendering API
-        if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
-        {
-            std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE;
-        }
-
-        std::cout << "Bind API OK" << std::endl;
-
-        // Create a surface
-        #ifdef __arm__
-        EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
-        #else
-        EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
-        #endif
-
-        EGLSurface surface = eglCreateWindowSurface(display, config,
-            (EGLNativeWindowType) rpiContext.eglWindow, nullptr);
-
-        if(surface == EGL_NO_SURFACE)
-        {
-            std::cerr << "Failed to create surface" << std::endl;
-            return EGL_FALSE;
-        }
-
-        std::cout << "Create surface OK" << std::endl;
-
-
-        // Create an EGL context
-         EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
-         if(context == EGL_NO_CONTEXT)
-         {
-            std::cerr << "Failed to create context" << std::endl;
-             return EGL_FALSE;
-         }
-
-        std::cout << "Create context OK" << std::endl;
-
-         // Make the context current
-         if(eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
-         {
-            std::cerr << "Failed to make context current" << std::endl;
-             return EGL_FALSE;
-         }
-
-        std::cout << "Make context current OK" << std::endl;
-
-        rpiContext.eglDisplay = display;
-        rpiContext.eglSurface = surface;
-        rpiContext.eglContext = context;
-
-        return EGL_TRUE;
+        std::cerr << "Failed to get display" << std::endl;
+        return EGL_FALSE;
     }
+
+    // Initialize EGL
+    if(eglInitialize(display, nullptr, nullptr) == EGL_FALSE)
+    {
+        std::cerr << "Failed to initialize EGL" << std::endl;
+        return EGL_FALSE;
+    }
+
+    std::cout << "Initialize display OK" << std::endl;
+
+    // Get configs
+    EGLint nbConfigs;
+    if(eglGetConfigs(display, nullptr, 0, &nbConfigs) == EGL_FALSE)
+    {
+        std::cerr << "Failed to get configs" << std::endl;
+        return EGL_FALSE;
+    }
+
+    std::cout << "Get config OK" << std::endl;
+
+    // Choose config
+     EGLConfig config;
+    if(eglChooseConfig(display, attribList, &config, 1, &nbConfigs) == EGL_FALSE)
+    {
+        std::cerr << "Failed to choose configs" << std::endl;
+        return EGL_FALSE;
+    }
+
+    std::cout << "Choose config OK" << std::endl;
+
+    // Defines the current rendering API
+    if(eglBindAPI(EGL_OPENGL_ES_API) == EGL_FALSE)
+    {
+        std::cerr << "Failed to bind EGL API" << std::endl; return EGL_FALSE;
+    }
+
+    std::cout << "Bind API OK" << std::endl;
+
+    // Create a surface
+    #ifdef __arm__
+    EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+    #else
+    EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
+    #endif
+
+    EGLSurface surface = eglCreateWindowSurface(display, config,
+        (EGLNativeWindowType) rpiContext.eglWindow, nullptr);
+
+    if(surface == EGL_NO_SURFACE)
+    {
+        std::cerr << "Failed to create surface" << std::endl;
+        return EGL_FALSE;
+    }
+
+    std::cout << "Create surface OK" << std::endl;
+
+
+    // Create an EGL context
+     EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+     if(context == EGL_NO_CONTEXT)
+     {
+        std::cerr << "Failed to create context" << std::endl;
+         return EGL_FALSE;
+     }
+
+    std::cout << "Create context OK" << std::endl;
+
+     // Make the context current
+     if(eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
+     {
+        std::cerr << "Failed to make context current" << std::endl;
+         return EGL_FALSE;
+     }
+
+    std::cout << "Make context current OK" << std::endl;
+
+    rpiContext.eglDisplay = display;
+    rpiContext.eglSurface = surface;
+    rpiContext.eglContext = context;
+
+    return EGL_TRUE;
+}
+
 }
 
 namespace RPi {
@@ -472,10 +474,10 @@ void Window::clear() const
 {
     #if defined __arm__ || defined LINUX_SDL_TEST
     // Clear the screen
-    //if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
-    //{
-        //std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
-    //}
+    if (SDL_FillRect(s_screen, NULL, SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    {
+        std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
+    }
     #endif
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -489,9 +491,9 @@ void Window::display() const
 void Window::displayText(std::string const & text) const
 {
     // Ugly
-    //glDisable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
     display_text(text);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Window::showMousePointer(bool show) const
@@ -520,7 +522,7 @@ void Window::grabMousePointer(bool grab) const
 void Window::init() const
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::userInterrupt()
