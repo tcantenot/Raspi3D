@@ -127,6 +127,7 @@ void TestApp::run()
         {
             if(!s_lag) doLag();
             s_lag = !s_lag;
+            std::cout << "Lag : " << std::boolalpha << s_lag << std::endl;
         }
     
         // Clear the screen
