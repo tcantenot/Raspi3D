@@ -474,7 +474,7 @@ void Window::clear() const
 {
     #if defined __arm__ || defined LINUX_SDL_TEST
     // Clear the screen
-    if (SDL_FillRect(s_screen, nullptr, 0x00);//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
+    if (SDL_FillRect(s_screen, nullptr, 0x00) != 0)//SDL_MapRGB(s_screen->format, 0,0,0)) != 0)
     {
         std::cerr << "SDL_FillRect() Failed: " << SDL_GetError() << std::endl;
     }
