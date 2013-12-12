@@ -211,11 +211,11 @@ GLboolean user_interrupt(RPi::Context & context)
                     userinterrupt = EGL_TRUE;
             }
         }
-        //if(xev.type == MotionNotify)
-        //{
-            //auto const & mev = xev.xmotion;
-            //std::cout << "Mouse moved : " << mev.x << " | " << mev.y << " || " << mev.x_root << " | " << mev.y_root << std::endl;
-        //}
+        if(xev.type == MotionNotify)
+        {
+            auto const & mev = xev.xmotion;
+            std::cout << "Mouse moved : " << mev.x << " | " << mev.y << " || " << mev.x_root << " | " << mev.y_root << std::endl;
+        }
         if(xev.type == DestroyNotify)
             userinterrupt = EGL_TRUE;
     }
@@ -431,9 +431,9 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    //s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
-    s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+    //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
 
     if(s_screen == nullptr)
     {
@@ -476,7 +476,7 @@ Window::Window(Context & context, char const * title,
         EGL_DEPTH_SIZE,     (flags & WINDOW_DEPTH)   ? 8 : EGL_DONT_CARE,
         EGL_STENCIL_SIZE,   (flags & WINDOW_STENCIL) ? 8 : EGL_DONT_CARE,
         EGL_SAMPLE_BUFFERS, (flags & WINDOW_ALPHA)   ? 1 : 0,
-        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+        //EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
         EGL_NONE
     };
 

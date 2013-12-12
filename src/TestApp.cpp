@@ -154,7 +154,7 @@ void TestApp::run()
         }
 
         // Render the cube
-        //cube.render(*m_window.getContext().program, projection, modelview);
+        cube.render(*m_window.getContext().program, projection, modelview);
 
         //for(auto & c : cubes)
         //{
@@ -162,7 +162,7 @@ void TestApp::run()
         //}
 
         //glViewport(0, 0, m_window.getWidth() / 2, m_window.getHeight());
-        terrain.render(*m_window.getContext().program, projection, modelview);
+        //terrain.render(*m_window.getContext().program, projection, modelview);
         //glViewport(m_window.getWidth() / 2, 0, m_window.getWidth() / 2, m_window.getHeight());
         //terrain2.render(*m_window.getContext().program, projection, modelview);
 
@@ -183,7 +183,7 @@ void TestApp::run()
             
             std::cout << fpsText.str() << std::endl;
 
-            m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
+            //m_window.displayText("Scheduler " + Scheduler::GetSchedulerName(getpid()) + " : " + fpsText.str());
 
             totalTime -= 1000.0f;
             nbFrames = 0;
