@@ -34,6 +34,7 @@ static struct Param
     int w = 640;
     int h = 480;
     int lag = 6;
+    bool mouse = false;
 } s_param;
 
 void parse_args(int argc, char ** argv);
@@ -106,7 +107,7 @@ void parse_args(int argc, char ** argv)
 {
     int c;
 
-    while((c = getopt(argc, argv, "s:p:x:y:w:h:l:")) != -1)
+    while((c = getopt(argc, argv, "s:p:x:y:w:h:l:m")) != -1)
     {
         switch(c)
         {
@@ -130,6 +131,9 @@ void parse_args(int argc, char ** argv)
                 break;
             case 'l':
                 s_param.lag = Utils::Number<decltype(s_param.lag)>(optarg);
+                break;
+            case 'm':
+                s_param.mouse = true;
                 break;
             case '?':
                 if(optopt == 's')
