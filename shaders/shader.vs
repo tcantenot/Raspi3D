@@ -24,7 +24,8 @@ vec4 calc_color(float h)
 
 vec4 rainbow(float x, float y, float z)
 {
-    return vec4(abs(2.0*x)/terrainWidth, abs(3.0*y)/terrainHeight,
+    vec4 ambient = vec4(0.1, 0.1, 0.1, 0.0);
+    return ambient + vec4(abs(1.5*x)/terrainWidth, abs(3.0*y)/terrainHeight,
         abs(2.0*z)/maxHeight, 1.0);
 }
 
