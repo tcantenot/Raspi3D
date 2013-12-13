@@ -460,9 +460,6 @@ Window::Window(Context & context, char const * title,
     context.width  = m_width;
     context.height = m_height;
 
-    std::cout << "Window's width = " << m_width << std::endl;
-    std::cout << "Window's height = " << m_height << std::endl;
-
      //Initialize SDL_ttf library
     if(TTF_Init() != 0)
     {
