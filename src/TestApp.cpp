@@ -29,7 +29,7 @@ namespace {
 
     void doLag()
     {
-        for(auto i = 0; i < 100000; ++i);
+        for(auto i = 0; i < 200000; ++i);
     }
 
     bool s_lag = false;

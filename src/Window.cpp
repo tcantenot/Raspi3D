@@ -1,6 +1,7 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 #include <memory>
 
 #include <Window.hpp>
@@ -17,7 +18,7 @@
     #include <X11/Xutil.h>
 #endif
 
-//#define LINUX_SDL_TEST
+#define LINUX_SDL_TEST
 
 #ifndef __arm__
 // X11 related local variables
@@ -430,6 +431,12 @@ Window::Window(Context & context, char const * title,
     std::cout << "screenWidth = " << m_width << std::endl;
     std::cout << "screenHeight = " << m_height << std::endl;
 
+    std::ostringstream windowSize;
+
+    windowSize << "SDL_VIDEO_WINDOW_POS=" 
+               << context.x << "," << context.y;
+
+    putenv(strdup(windowSize.str().c_str())); 
     s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
