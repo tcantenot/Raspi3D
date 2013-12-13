@@ -25,7 +25,7 @@ using namespace RPi;
 
 void Draw(Context & context);
 
-static struct Info
+static struct Param
 {
     std::string sched = "SCHED_NORMAL";
     int priority = 0;
@@ -33,7 +33,8 @@ static struct Info
     int y = 0;
     int w = 640;
     int h = 480;
-} s_info;
+    int lag = 6;
+} s_param;
 
 void parse_args(int argc, char ** argv);
 
@@ -42,17 +43,17 @@ int main(int argc, char ** argv)
     parse_args(argc, argv);
 
     try {
-        Scheduler::SetScheduler(getpid(), s_info.sched, s_info.priority);
+        Scheduler::SetScheduler(getpid(), s_param.sched, s_param.priority);
     } catch(std::exception const & e) {
         std::cerr << "Error : " << e.what() << std::endl;
     }
 
-    std::cout << "Scheduler : " << s_info.sched << std::endl;
-    std::cout << "Priority  : " << s_info.priority << std::endl;
-    std::cout << "X  : " << s_info.x << std::endl;
-    std::cout << "Y  : " << s_info.y << std::endl;
-    std::cout << "W  : " << s_info.w << std::endl;
-    std::cout << "H  : " << s_info.h << std::endl;
+    std::cout << "Scheduler : " << s_param.sched << std::endl;
+    std::cout << "Priority  : " << s_param.priority << std::endl;
+    std::cout << "X  : " << s_param.x << std::endl;
+    std::cout << "Y  : " << s_param.y << std::endl;
+    std::cout << "W  : " << s_param.w << std::endl;
+    std::cout << "H  : " << s_param.h << std::endl;
 
     //Scheduler::SetScheduler(getpid(), SchedulerType::RoundRobin, 85);
 
@@ -70,7 +71,7 @@ int main(int argc, char ** argv)
     windowTitle += "Sched : " + Scheduler::GetSchedulerName(getpid());
     windowTitle += " - Priority : " + Utils::String(Scheduler::GetPriority(getpid()));
 
-    RPi::Window window(context, windowTitle.c_str(), s_info.x, s_info.y, s_info.w, s_info.h);
+    RPi::Window window(context, windowTitle.c_str(), s_param.x, s_param.y, s_param.w, s_param.h);
 
     std::cout << "Window created" << std::endl;
 
@@ -85,7 +86,7 @@ int main(int argc, char ** argv)
 
     window.init();
 
-    TestApp app(window, argc, argv);
+    TestApp app(window, argc, argv, s_param.lag);
 
     app.registerDrawFunc(Draw);
 
@@ -105,27 +106,30 @@ void parse_args(int argc, char ** argv)
 {
     int c;
 
-    while((c = getopt(argc, argv, "s:p:x:y:w:h:")) != -1)
+    while((c = getopt(argc, argv, "s:p:x:y:w:h:l:")) != -1)
     {
         switch(c)
         {
             case 's':
-                s_info.sched = optarg;
+                s_param.sched = optarg;
                 break;
             case 'p':
-                s_info.priority = Utils::Number<decltype(s_info.priority)>(optarg);
+                s_param.priority = Utils::Number<decltype(s_param.priority)>(optarg);
                 break;
             case 'x': 
-                s_info.x = Utils::Number<decltype(s_info.x)>(optarg);
+                s_param.x = Utils::Number<decltype(s_param.x)>(optarg);
                 break;
             case 'y': 
-                s_info.y = Utils::Number<decltype(s_info.y)>(optarg);
+                s_param.y = Utils::Number<decltype(s_param.y)>(optarg);
                 break;
             case 'w': 
-                s_info.w = Utils::Number<decltype(s_info.w)>(optarg);
+                s_param.w = Utils::Number<decltype(s_param.w)>(optarg);
                 break;
             case 'h': 
-                s_info.h = Utils::Number<decltype(s_info.h)>(optarg);
+                s_param.h = Utils::Number<decltype(s_param.h)>(optarg);
+                break;
+            case 'l':
+                s_param.lag = Utils::Number<decltype(s_param.lag)>(optarg);
                 break;
             case '?':
                 if(optopt == 's')

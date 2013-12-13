@@ -27,17 +27,18 @@ namespace {
         return (std::rand() / static_cast<float>(RAND_MAX)) * (b - a) + a;
     }
 
+    int s_lag = 6;
     void doLag()
     {
-        for(auto i = 0; i < 600000; ++i);
+        for(auto i = 0; i < s_lag * 100000; ++i);
     }
 }
 
 namespace RPi {
 
-TestApp::TestApp(Window & window, int argc, char ** argv): App(window, argc, argv)
+TestApp::TestApp(Window & window, int argc, char ** argv, int lag): App(window, argc, argv)
 {
-
+    s_lag = lag;
 }
         
 TestApp::~TestApp()
