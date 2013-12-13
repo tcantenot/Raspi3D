@@ -259,6 +259,11 @@ void display_text(std::string const & text)
         s_clear_surface = SDL_CreateRGBSurface( SDL_HWSURFACE, s_screen->w, s_screen->h * 0.2, 32, 0, 0, 0, 0); 
     }
 
+    if(s_text != nullptr)
+    {
+        delete s_text;
+    }
+
     //s_text = TTF_RenderText_Solid(s_font, text.c_str(), s_text_color);
     s_text = TTF_RenderText_Shaded(s_font, text.c_str(), s_text_color, s_bg_color);
 
