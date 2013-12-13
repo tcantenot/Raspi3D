@@ -10,7 +10,7 @@ Camera::Camera(glm::vec3 const & position, glm::vec3 const & t, glm::vec3 const 
     float sensibility, float speed):
     m_phi(0), m_theta(0), m_position(position), m_target(t), m_up(up),
     m_orientation(), m_sideShift(), m_modelview(), m_sensibility(sensibility),
-    m_speed(speed), m_needUpdateMV(true)
+    m_speed(speed), m_mouseEnabled(true), m_needUpdateMV(true)
 {
     target(t);
     m_sideShift = glm::normalize(glm::cross(m_up, m_orientation));
@@ -30,7 +30,7 @@ glm::mat4 const & Camera::lookAt()
 
 void Camera::move(Input const & input)
 {
-    if(input.mouseMoved())
+    if(m_mouseEnabled && input.mouseMoved())
     {
         this->orient(static_cast<float>(input.getXRel()),
             static_cast<float>(input.getYRel()));
@@ -157,6 +157,16 @@ void Camera::speed(float speed)
 float Camera::speed()
 {
     return m_speed;
+}
+
+void Camera::enableMouse(bool mouse)
+{
+    m_mouseEnabled = mouse;
+}
+
+bool Camera::isMouseEnabled() const
+{
+    return m_mouseEnabled;
 }
 
 void Camera::orient(float xRel, float yRel)

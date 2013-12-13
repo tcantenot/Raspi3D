@@ -44,6 +44,9 @@ namespace RPi {
         void speed(float speed);
         float speed();
 
+        void enableMouse(bool mouse);
+        bool isMouseEnabled() const;
+
     private:
         void orient(float xRel, float yRel);
         void updateMV();
@@ -60,6 +63,8 @@ namespace RPi {
 
         float m_sensibility;
         float m_speed;
+
+        bool m_mouseEnabled;
 
         bool m_needUpdateMV;
 };

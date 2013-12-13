@@ -29,7 +29,7 @@ namespace {
 
     void doLag()
     {
-        for(auto i = 0; i < 2500000; ++i);
+        for(auto i = 0; i < 100000; ++i);
     }
 
     bool s_lag = false;
@@ -81,6 +81,8 @@ void TestApp::run()
     camera.position(glm::vec3(21, 11, 20));
     camera.target(glm::vec3(13, 1, 11));
     camera.up(glm::vec3(0, 1, 0));
+
+    camera.enableMouse(false);
 
     Input input;
 
