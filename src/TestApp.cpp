@@ -78,8 +78,8 @@ void TestApp::run()
         static_cast<float>(m_window.getWidth()) / static_cast<float>(m_window.getHeight()),
         1.f, 100.f);
 
-    camera.position(glm::vec3(15, 15, 15));
-    camera.target(glm::vec3(10, 10, 10));
+    camera.position(glm::vec3(21, 11, 20));
+    camera.target(glm::vec3(13, 1, 11));
     camera.up(glm::vec3(0, 1, 0));
 
     Input input;
@@ -189,18 +189,15 @@ void TestApp::run()
         if(totalTime > 1000.0f)
         {
             auto fps = (static_cast<float>(nbFrames) / (totalTime / 1000.f));
-            std::ostringstream fpsText;
-            fpsText << nbFrames << " frames rendered in " << totalTime 
+
+            std::cout << nbFrames << " frames rendered in " << totalTime 
                       << " ms -> FPS = " 
-                      << fps;
+                      << fps << std::endl;
 
-            std::cout << fpsText.str() << std::endl;
-
-            std::cout << "Pos : (" << camera.position().x << ", " << camera.position().y << ", " << camera.position().z << ")" << std::endl;
-            std::cout << "Target : (" << camera.target().x << ", " << camera.target().y << ", " << camera.target().z << ")" << std::endl;
+            //std::cout << "Pos : (" << camera.position().x << ", " << camera.position().y << ", " << camera.position().z << ")" << std::endl;
+            //std::cout << "Target : (" << camera.target().x << ", " << camera.target().y << ", " << camera.target().z << ")" << std::endl;
             
-            fpsText.clear();
-
+            std::ostringstream fpsText;
             fpsText << "Sched : " << Scheduler::GetSchedulerName(getpid())
                     << "; Priority : " << Scheduler::GetPriority(getpid())
                     << " => " << fps << " FPS";
