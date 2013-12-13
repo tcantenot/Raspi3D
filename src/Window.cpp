@@ -437,9 +437,12 @@ Window::Window(Context & context, char const * title,
                << context.x << "," << context.y;
 
     putenv(strdup(windowSize.str().c_str())); 
-    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);// | SDL_FULLSCREEN);
+    s_screen = SDL_SetVideoMode(m_width / 2, m_height, 8, SDL_SWSURFACE);
+
     //s_screen = SDL_SetVideoMode(1366, 768, 8, SDL_HWSURFACE | SDL_FULLSCREEN);
     //s_screen = SDL_SetVideoMode(0, 0, 0, SDL_SWSURFACE | SDL_FULLSCREEN);
+
+    SDL_WM_SetCaption(title, nullptr);
 
     if(s_screen == nullptr)
     {

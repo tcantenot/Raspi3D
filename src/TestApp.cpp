@@ -31,8 +31,6 @@ namespace {
     {
         for(auto i = 0; i < 1000000; ++i);
     }
-
-    bool s_lag = false;
 }
 
 namespace RPi {
@@ -125,13 +123,6 @@ void TestApp::run()
             break;
         }
 
-        if(input.isKeyPressed(SDLK_l))
-        {
-            s_lag = !s_lag;
-            std::cout << "Lag : " << std::boolalpha << s_lag << std::endl;
-        }
-    
-        //if(s_lag) doLag();
         doLag();
 
         // Clear the screen
@@ -140,7 +131,6 @@ void TestApp::run()
         modelview = camera.lookAt();
 
         projection = camera.projection();
-;
 
         if(timeFromStart - timeFromStartTmp > 100.f)
         {

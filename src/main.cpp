@@ -65,7 +65,12 @@ int main(int argc, char ** argv)
 
     Context context;
 
-    RPi::Window window(context, "First App", s_info.x, s_info.y, s_info.w, s_info.h);
+    std::string windowTitle = "";
+
+    windowTitle += "Sched : " + Scheduler::GetSchedulerName(getpid());
+    windowTitle += " - Priority : " + Utils::String(Scheduler::GetPriority(getpid()));
+
+    RPi::Window window(context, windowTitle.c_str(), s_info.x, s_info.y, s_info.w, s_info.h);
 
     std::cout << "Window created" << std::endl;
 
