@@ -118,6 +118,8 @@ void Terrain::render(GLSLProgram const & program, glm::mat4 & projection, glm::m
         program.sendMatrix("MatProjection", projection);
         program.sendMatrix("MatModelView", modelView);
         program.sendFloat("maxHeight", m_maxHeight);
+        program.sendFloat("terrainWidth", m_w);
+        program.sendFloat("terrainHeight", m_h);
 
 
         //glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, static_cast<void *>(nullptr));
