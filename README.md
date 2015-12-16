@@ -1,4 +1,4 @@
-raspi_3D_simple_app
+Raspi3D
 ===================
 
 Simple 3D application running on Raspberry Pi.
